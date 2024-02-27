@@ -14,7 +14,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Autonomous
-public class Auton_RedBackdrop extends OpMode {
+public class Auton_RedWing extends OpMode {
 
     RobotMethods robot = new RobotMethods();
     Auton_BlueBackdrop blueBackdrop = new Auton_BlueBackdrop();
