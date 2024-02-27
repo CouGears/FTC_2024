@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -29,6 +30,7 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
     private int liftLimit = 3000;
     private boolean pullup = false;
     private int dropDelay = 0;
+    public ElapsedTime mRunTime = new ElapsedTime();
 
     public void TelemetryUpdate() {
         telemetry.addData("Drive Mode", driveswitch);
@@ -49,6 +51,8 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
     @Override
     public void runOpMode() {
         //region hardware map
+
+
         motorFL = hardwareMap.get(DcMotor.class, "motorFL");
         motorBL = hardwareMap.get(DcMotor.class, "motorBL");
         motorBR = hardwareMap.get(DcMotor.class, "motorBR");
@@ -100,8 +104,10 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+        mRunTime.reset();
         while (opModeIsActive()) {
             TelemetryUpdate();
+
             while (!pullup) {
                 double speed = 1;
                 if (driveswitch == 0) {
@@ -164,7 +170,9 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
                 motorBR.setPower((-(this.gamepad1.right_stick_y) - (this.gamepad1.right_stick_x) - (this.gamepad1.left_stick_y) + (this.gamepad1.left_stick_x)) * speed);
                 motorFR.setPower(-((this.gamepad1.right_stick_y) + (this.gamepad1.right_stick_x) + (this.gamepad1.left_stick_y) + (this.gamepad1.left_stick_x)) * speed);
 
-                if (gamepad1.right_trigger > .1) {
+
+                if ((gamepad1.right_trigger > .1) || (5 < mRunTime.time() && mRunTime.time() < 10))
+                {
                     IntakeString.setPower(gamepad1.right_trigger);
                 } else if (gamepad1.left_trigger > .1) {
                     IntakeString.setPower(-1 * gamepad1.left_trigger);
