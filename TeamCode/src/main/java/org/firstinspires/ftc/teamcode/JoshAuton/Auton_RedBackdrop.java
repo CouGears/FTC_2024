@@ -47,8 +47,8 @@ public class Auton_RedBackdrop extends OpMode {
             // update pos
             pos = detectProp("Red Marker");
             telemetry.update();
-            // wait 20ms
-            sleep(20);
+            // wait 10ms
+            sleep(10);
             i++;
         }
 
@@ -58,63 +58,67 @@ public class Auton_RedBackdrop extends OpMode {
         switch (pos) {
             // if the prop is on left spike mark
             case "left":
-
-                // drive to prop
-                robot.drive(-5, 5, 1); //Lightly push pixel on mark
+                robot.drive(0, 29, 1);
                 robot.returnAfterBusy();
-                robot.turn(182, .35);
+                robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(0, -28, 1); //Mv to spike mark
+                robot.moveLift(1000, 1, telemetry);
                 robot.returnAfterBusy();
-                robot.drive(-7, 0, 1); //Mv to spike mark
-                robot.returnAfterBusy();
-                robot.drive(4, 0, 1); //Mv to spike mark
-                robot.returnAfterBusy();
-                robot.backIntake(.6); //Start reving back wheel
-                sleep(500);
-                robot.middle(-.6); //Push pixel out
-                sleep(1500);
-                robot.backIntake(0); //Stop wheel movement
+                robot.middle(0.5);
+                sleep(1000);
                 robot.middle(0);
-                //robot.drive(-5, 0, 1); //Move to middle drop pos
-                //robot.returnAfterBusy();
-                robot.drive(39, 0, 1); //Move to middle drop pos
+                robot.drive(-15, 0, 1);
                 robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry); //Raise lift
+                robot.turn(180, 1);
                 robot.returnAfterBusy();
-                robot.drive(10, 0, 0.2);
+                robot.drive(0, 0, 1);
+                robot.returnAfterBusy();
+                robot.drive(26, 0, 1);
+                robot.returnAfterBusy();
+                robot.drive(0, -10, 1);
+                robot.returnAfterBusy();
+
+                robot.drive(20, 0, 0.2);
                 dist = robot.getBackdropDistance();
-                while (dist > 3.5) { //While not close enough, keep getting closer
+                // wait until robot is less than 3.5 inches from the backdrop
+                while (dist > 3.5) {
                     dist = robot.getBackdropDistance();
                 }
-                robot.stopWheels(); //When we get to target distance, stop
-                robot.drive(1, -3, 1); //Mv to right drop pos
+
+                // stop the wheels
+                robot.stopWheels();
+                robot.drive(.5, 0, 1); //Mv to spike mark
                 robot.returnAfterBusy();
-                robot.setDropServo(.5); //Drop pixel
+                // drop the pixel
+                robot.setDropServo(.5);
                 sleep(1000);
-                robot.drive(-2, 0, 0.5); //Move to wall
+                // park
+                robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
-                robot.moveLift(-500, 1, telemetry); //Park
+                robot.moveLift(-1000, 1, telemetry);
+                robot.drive(0, -18, 1);
+                robot.returnAfterBusy();
+                robot.drive(14, 0, 1);
+                robot.returnAfterBusy();
                 break;
             // if the prop is on the middle spike mark
             case "middle":
                 // drive to prop
-                robot.drive(0, 12, 1);
+                robot.drive(0, 21, 1);
                 robot.returnAfterBusy();
                 robot.turn(90, 1);
                 robot.returnAfterBusy();
-                robot.drive(24, 0, 1);
+                robot.drive(14, 0, 1);
                 robot.returnAfterBusy();
                 // move lift out of the day
                 robot.moveLift(1000, 1, telemetry);
-                robot.returnAfterBusy();
                 // drop pixel
                 robot.middle(.5);
                 sleep(1000);
                 robot.middle(0);
                 // back up
-                robot.drive(-8, 0, 1);
+                robot.drive(-9, 0, 1);
                 robot.returnAfterBusy();
                 // Turn and move to backdrop
                 robot.turn(90, 1);
@@ -135,7 +139,7 @@ public class Auton_RedBackdrop extends OpMode {
                 robot.returnAfterBusy();
                 // drop the pixel
                 robot.setDropServo(.5);
-                sleep(1000);
+                sleep(500);
                 // park
                 robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
@@ -148,39 +152,53 @@ public class Auton_RedBackdrop extends OpMode {
                 break;
             // if the prop is on the right spike mark
             case "right":
-                robot.drive(-8, 5, 1); //Lightly push pixel on mark
+                robot.drive(0, 29, 1);
                 robot.returnAfterBusy();
-                robot.turn(182, .5);
+                robot.turn(180, 1);
                 robot.returnAfterBusy();
-                robot.drive(0, -31, 1);
+                robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(4, 0, 1);
+                robot.moveLift(1000, 1, telemetry);
                 robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry); //Mv lift out of way
-                robot.returnAfterBusy();
-                robot.middle(0.5); // Drop on spike mark
+                robot.middle(0.5);
                 sleep(1000);
                 robot.middle(0);
-                robot.drive(-6, 0, 1); //Mv back
+                robot.drive(-7, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(0, 15, 1); //Mv sideways to wall
+                robot.drive(0, -12, 1);
                 robot.returnAfterBusy();
-                robot.drive(35, 0, 1); //Mv to canvas
+                robot.drive(25, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(50, 0, 0.4); //Mv up to cnavas
+                robot.drive(0, 6, 1);
+                robot.returnAfterBusy();
+                robot.drive(5, 0, 1);
+                robot.returnAfterBusy();
+                robot.drive(20, 0, 0.2);
                 dist = robot.getBackdropDistance();
-                while (dist > 3.5) { //While not close enough, keep getting closer
+                // wait until robot is less than 3.5 inches from the backdrop
+                while (dist > 3.5) {
                     dist = robot.getBackdropDistance();
                 }
-                robot.stopWheels(); //When we get to target distance, stop
-                robot.drive(1, -3, 1); //Mv to canvas
+
+                // stop the wheels
+                robot.stopWheels();
+                robot.drive(0, 16, 1);
                 robot.returnAfterBusy();
-                robot.setDropServo(.5); //Drop pixel
+                robot.drive(.5, 0, 1); //Mv to spike mark
+                robot.returnAfterBusy();
+                // drop the pixel
+                robot.setDropServo(.5);
                 sleep(1000);
-                robot.drive(-2, 0, 1); //Mv back to wall
+                // park
+                robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
-                sleep(1000);
+                robot.moveLift(-1000, 1, telemetry);
+
+                robot.drive(0, 17, 1);
+                robot.returnAfterBusy();
+                robot.drive(12, 0, 1);
+                robot.returnAfterBusy();
                 break;
         }
     }
