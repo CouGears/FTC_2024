@@ -14,15 +14,15 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Autonomous
-public class Auton_RedWing extends OpMode {
+public class Auton_RedBackdrop extends OpMode {
 
     RobotMethods robot = new RobotMethods();
+    Auton_BlueBackdrop blueBackdrop = new Auton_BlueBackdrop();
 
     // tfod
     private static final boolean USE_WEBCAM = true;
     private static final String TFOD_MODEL_ASSET = "OldPropModel.tflite";
     private static final String[] LABELS = { "Blue Marker", "Red Marker" };
-
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
 
@@ -43,61 +43,72 @@ public class Auton_RedWing extends OpMode {
         }
     }
 
+
+    // code to run on auton start
     @Override
     public void start() {
+
+        // initialize distance variable here
         double dist;
+
         switch (pos) {
+            // if the prop is on left spike mark
             case "left":
-                // drive to prop
-                robot.drive(0, 32, 1);
+                robot.drive(0, 29, 1);
                 robot.returnAfterBusy();
-                robot.drive(6, 0, 1);
+                robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                // move lift out of the way
                 robot.moveLift(1000, 1, telemetry);
                 robot.returnAfterBusy();
-                // drop pixel
                 robot.middle(0.5);
                 sleep(1000);
                 robot.middle(0);
+                robot.drive(-15, 0, 1);
+                robot.returnAfterBusy();
                 break;
+            // if the prop is on the middle spike mark
             case "middle":
                 // drive to prop
-                robot.drive(0, 33, 1);
+                robot.drive(0, 21, 1);
                 robot.returnAfterBusy();
                 robot.turn(90, 1);
                 robot.returnAfterBusy();
-                // move lift out of the way
-                robot.moveLift(1000, 1, telemetry);
+                robot.drive(14, 0, 1);
                 robot.returnAfterBusy();
+                // move lift out of the day
+                robot.moveLift(1000, 1, telemetry);
                 // drop pixel
-                robot.middle(0.5);
+                robot.middle(.5);
                 sleep(1000);
                 robot.middle(0);
+                // back up
+                robot.drive(-9, 0, 1);
+                robot.returnAfterBusy();
                 break;
+            // if the prop is on the right spike mark
             case "right":
-                // drive to prop
-                robot.drive(0, 28, 1);
+                robot.drive(0, 29, 1);
                 robot.returnAfterBusy();
                 robot.turn(180, 1);
                 robot.returnAfterBusy();
-                robot.drive(6, 0, 1);
+                robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                // move lift our of the way
                 robot.moveLift(1000, 1, telemetry);
                 robot.returnAfterBusy();
-                // drop prop
                 robot.middle(0.5);
                 sleep(1000);
                 robot.middle(0);
+                robot.drive(-7, 0, 1);
+                robot.returnAfterBusy();
                 break;
         }
     }
 
+    // empty loop funcion
     @Override
-    public void loop() {
-    }
+    public void loop() {}
 
+    // sleep function
     public void sleep(int ms) {
         try {
             Thread.sleep(ms);
@@ -107,6 +118,7 @@ public class Auton_RedWing extends OpMode {
         }
     }
 
+    // tensorflow init function
     private void initTfod() {
 
         // Create the TensorFlow processor by using a builder.
@@ -168,6 +180,7 @@ public class Auton_RedWing extends OpMode {
 
     }   // end method initTfod()
 
+    // function to scan for a prop
     private String detectProp(String autonColor) {
         // set default pos to right
         String pos = "right";

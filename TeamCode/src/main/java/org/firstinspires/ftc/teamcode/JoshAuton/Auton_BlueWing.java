@@ -16,6 +16,7 @@ import java.util.List;
 @Autonomous
 public class Auton_BlueWing extends OpMode {
 
+    // initialize new instance of robot
     RobotMethods robot = new RobotMethods();
 
     // tfod
@@ -43,57 +44,58 @@ public class Auton_BlueWing extends OpMode {
         }
     }
 
-    // code to run on auton start
     @Override
     public void start() {
+
         double dist;
         switch (pos) {
-            // if prop is on left spike mark
             case "left":
-                // drive to prop
-                robot.drive(0, 28, 1);
+                robot.drive(0, 29, 1);
                 robot.returnAfterBusy();
-                robot.drive(4, 0, 1);
+                //robot.turn(180, 1);
+                //robot.returnAfterBusy();
+                robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                // move the lift out of the way
                 robot.moveLift(1000, 1, telemetry);
                 robot.returnAfterBusy();
-                // drop pixel
-                robot.middle(1);
+                robot.middle(0.5);
                 sleep(1000);
                 robot.middle(0);
+                robot.drive(-7, 0, 1);
+                robot.returnAfterBusy();
                 break;
-            // if prop is on middle spike mark
             case "middle":
                 // drive to prop
-                robot.drive(0, 32, 1);
+                robot.drive(0, 21, 1);
                 robot.returnAfterBusy();
                 robot.turn(90, 1);
                 robot.returnAfterBusy();
-                // move lift out of the way
-                robot.moveLift(1000, 1, telemetry);
+                robot.drive(14, 0, 1);
                 robot.returnAfterBusy();
+                // move lift out of the day
+                robot.moveLift(1000, 1, telemetry);
                 // drop pixel
-                robot.middle(1);
+                robot.middle(.5);
                 sleep(1000);
                 robot.middle(0);
+                // back up
+                robot.drive(-9, 0, 1);
+                robot.returnAfterBusy();
                 break;
-            // if prop is on right spike mark
             case "right":
-                // drive to prop
-                robot.drive(0, 28, 1);
+                robot.drive(0, 29, 1);
                 robot.returnAfterBusy();
                 robot.turn(180, 1);
                 robot.returnAfterBusy();
-                robot.drive(4, 0, 1);
+                robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                // move lift out of the way
                 robot.moveLift(1000, 1, telemetry);
                 robot.returnAfterBusy();
-                // drop pixel
-                robot.middle(1);
+                robot.middle(0.5);
                 sleep(1000);
                 robot.middle(0);
+                robot.drive(-15, 0, 1);
+                robot.returnAfterBusy();
                 break;
         }
     }
