@@ -131,7 +131,7 @@ public class Auton_RedBackdrop extends OpMode {
 
                 // stop the wheels
                 robot.stopWheels();
-                robot.drive(.5, 2, 1); //Mv to spike mark
+                robot.drive(.5, 0, 1); //Mv to spike mark
                 robot.returnAfterBusy();
                 // drop the pixel
                 robot.setDropServo(.5);
@@ -141,7 +141,7 @@ public class Auton_RedBackdrop extends OpMode {
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
                 robot.moveLift(-1000, 1, telemetry);
-                robot.drive(0, 20, 1);
+                robot.drive(0, 24, 1);
                 robot.returnAfterBusy();
                 robot.drive(10, 0, 1);
                 robot.returnAfterBusy();
