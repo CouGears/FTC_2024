@@ -346,25 +346,25 @@ public class TwoDriverTeleOp extends LinearOpMode {
         switch (pixel_color){
             case 1:
                 // telemetry.addLine("Reading: green");
-                telemetry.addData("Middle intake:", "Green Pixel Loaded");
+                telemetry.addData("Middle intake", "Green Pixel Loaded");
                 break;
             case 2:
                 //telemetry.addLine("Reading: purple");
-                telemetry.addData("Middle intake:", "Purple Pixel Loaded");
+                telemetry.addData("Middle intake", "Purple Pixel Loaded");
 
                 break;
             case 3:
                 //telemetry.addLine("Reading: yellow");
-                telemetry.addData("Middle intake:", "Yellow Pixel Loaded");
+                telemetry.addData("Middle intake", "Yellow Pixel Loaded");
 
                 break;
             case 4:
                 //telemetry.addLine("Reading: white");
-                telemetry.addData("Middle intake:", "White Pixel Loaded");
+                telemetry.addData("Middle intake", "White Pixel Loaded");
 
                 break;
             case 0:
-                telemetry.addData("Middle intake:", "No Pixel Sensed");
+                telemetry.addData("Middle intake", "No Pixel Sensed");
                 // telemetry.addLine("Reading: No Pixel");
                 break;
 
