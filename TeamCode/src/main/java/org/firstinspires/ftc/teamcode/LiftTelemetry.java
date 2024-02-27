@@ -19,6 +19,8 @@ public class LiftTelemetry extends OpMode {
         Lift = hardwareMap.get(DcMotor.class, "Lift");
         BackdropDistance = hardwareMap.get(DistanceSensor.class, "BackdropDistance");
 
+        Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         // You can set other motor behaviors here if needed, like direction or mode
     }
 
