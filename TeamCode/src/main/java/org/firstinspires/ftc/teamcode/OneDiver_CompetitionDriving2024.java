@@ -149,6 +149,9 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
                 } else if (gamepad1.left_bumper) {
                     MiddleIntake.setPower(-1);
                     BackIntake.setPower(0);
+                } else if (gamepad1.x) {
+                    BackIntake.setPower(-1);
+                    MiddleIntake.setPower(0);
                 } else {
                     MiddleIntake.setPower(0);
                     BackIntake.setPower(0);
@@ -219,7 +222,7 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
 
 
 
-                telemetry.update();
+                //telemetry.update();
 
                 double distanceFromBackdrop = BackdropDistance.getDistance(DistanceUnit.INCH);
 
@@ -229,23 +232,27 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
                 double sin120 = Math.sin(radian120);
                 double sin15 = Math.sin(radian15);
 
-                double liftLimitInches = distanceFromBackdrop * (sin120 / sin15);
+                double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
 
-                int liftEncoderPerInch = 107;
+                int liftEncoderPerInch = 22;
 
                 int liftLimit = (int) (liftEncoderPerInch * liftLimitInches);
-                if (liftLimit > 3000) {
-                    liftLimit = 3000;
+                if (liftLimit > 600) {
+                    liftLimit = 600;
                 }
+
+                telemetry.addData("Lift Limit: ", liftLimit);
+                telemetry.update();
 
                 //LIFT
                 if ((gamepad1.dpad_up && Lift.getCurrentPosition() <= liftLimit) || (gamepad1.dpad_up && gamepad1.dpad_right)) { // P1 should still be in control of lift
                     Lift.setPower(1);
                 } else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) || (gamepad1.dpad_down && gamepad1.dpad_right)) { //At 500 b/c motor will overspin w/ momentum and end up <0
-                    Lift.setPower(-1);
+                    Lift.setPower(-.5);
                 } else {
                     Lift.setPower(0);
                 }
+
 
 
             }
