@@ -294,5 +294,49 @@ public class Auton_BlueWingPlusBackdrop extends OpMode {
 
     }   // end method telemetryTfod()
 
+    private String detectProp(String autonColor) {
+        // set default pos to right
+        String pos = "right";
+        // get list of all recognitions
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        // if there are any recognitions
+        if (currentRecognitions.size() > 0) {
+            // get the first recognition
+            Recognition recognition = currentRecognitions.get(0);
+
+            // check if the recognition label matches the autonomous color and its confidence is above 70 percent
+            if (recognition.getLabel().equals(autonColor) && recognition.getConfidence() > 0.6) {
+                // get the x position of the recognition
+                double x = (recognition.getLeft() + recognition.getRight()) / 2;
+                // if the x position is less than 300 (on the left)
+                if (x < 300) {
+                    // set the pos to left
+                    telemetry.addLine("Spike Mark: left");
+                    pos = "left";
+                } else { // if the x position is more than 300 (on the right)
+                    // set the pos to middle (bc the camera can only see left and middle spike marks)
+                    telemetry.addLine("Spike Mark: middle");
+                    pos = "middle";
+                }
+            }
+        }
+
+        telemetry.addData("# Objects Detected", currentRecognitions.size());
+
+        // Step through the list of recognitions and display info for each one.
+        for (Recognition recognition : currentRecognitions) {
+            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+
+            telemetry.addData(""," ");
+            telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
+            telemetry.addData("- Position", "%.0f / %.0f", x, y);
+            telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
+        }   // end for() loop
+
+        return pos;
+
+    }
+
 
 }
