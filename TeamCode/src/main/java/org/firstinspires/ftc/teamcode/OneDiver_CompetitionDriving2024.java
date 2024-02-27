@@ -224,7 +224,12 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
 
                 double liftLimitInches = distanceFromBackdrop * (sin120 / sin15);
 
+                int liftEncoderPerInch = 107;
 
+                int liftLimit = (int) (liftEncoderPerInch * liftLimitInches);
+                if (liftLimit > 3000) {
+                    liftLimit = 3000;
+                }
 
                 //LIFT
                 if ((gamepad1.dpad_up && Lift.getCurrentPosition() <= liftLimit) || (gamepad1.dpad_up && gamepad1.dpad_right)) { // P1 should still be in control of lift
