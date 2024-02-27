@@ -112,24 +112,23 @@ public class TwoDriverTeleOp extends LinearOpMode {
         waitForStart();
         mRunTime.reset();
         // on teleop start
-        while (opModeIsActive()) {
+        TelemetryUpdate();
+        while (!pullup && opModeIsActive()) {
+            bucketSystem();
+            droneSystem();
+            speedSystem();
+            intakeSystem();
+            pullupSystemA();;
+            driveSystem();
+            intakeStringSystem();
+            middleIntakePixelColorSystem();
+            liftSystem();
             TelemetryUpdate();
-            while (!pullup) {
-                bucketSystem();
-                droneSystem();
-                speedSystem();
-                intakeSystem();
-                pullupSystemA();;
-                driveSystem();
-                intakeStringSystem();
-                middleIntakePixelColorSystem();
-                liftSystem();
-                TelemetryUpdate();
-            }
-            while (pullup) {
-                pullupSystemB();
-            }
         }
+        while (pullup && opModeIsActive()) {
+            pullupSystemB();
+        }
+
     }
 
     //// DRIVE SYSTEM
