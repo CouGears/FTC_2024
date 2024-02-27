@@ -100,15 +100,11 @@ public class Auton_RedBackdrop extends OpMode {
             // if the prop is on the middle spike mark
             case "middle":
                 // drive to prop
-                robot.drive(-5, 5, 1); //Lightly push pixel on mark
+                robot.drive(0, 12, 1);
                 robot.returnAfterBusy();
-                robot.turn(183, .5);
+                robot.turn(90, 1);
                 robot.returnAfterBusy();
-                robot.drive(-3, -27, 1);
-                robot.returnAfterBusy();
-                robot.turn(-90, 1);
-                robot.returnAfterBusy();
-                robot.drive(5, 0, 1);
+                robot.drive(24, 0, 1);
                 robot.returnAfterBusy();
                 // move lift out of the day
                 robot.moveLift(1000, 1, telemetry);
@@ -135,7 +131,7 @@ public class Auton_RedBackdrop extends OpMode {
 
                 // stop the wheels
                 robot.stopWheels();
-                robot.drive(.5, -2, 1); //Mv to spike mark
+                robot.drive(.5, 2, 1); //Mv to spike mark
                 robot.returnAfterBusy();
                 // drop the pixel
                 robot.setDropServo(.5);
@@ -144,6 +140,11 @@ public class Auton_RedBackdrop extends OpMode {
                 robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
+                robot.moveLift(-1000, 1, telemetry);
+                robot.drive(0, 20, 1);
+                robot.returnAfterBusy();
+                robot.drive(10, 0, 1);
+                robot.returnAfterBusy();
                 break;
             // if the prop is on the right spike mark
             case "right":
