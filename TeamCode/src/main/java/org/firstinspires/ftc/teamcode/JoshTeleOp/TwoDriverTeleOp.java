@@ -132,12 +132,14 @@ public class TwoDriverTeleOp extends LinearOpMode {
     }
 
     //// DRIVE SYSTEM
-    /// NO KEYBINDS
+    /// KEYBINDS - CONTROLLER 1
+    // LEFT JOYSTICK: DRIVE/STRAFE
+    // RIGHT JOYSTICK: DRIVE/TURN
     private void driveSystem() {
-        motorFL.setPower(((this.gamepad1.right_stick_y) - (this.gamepad1.right_stick_x) + ((this.gamepad1.left_stick_y)) - (this.gamepad1.left_stick_x)) * speed);
-        motorBL.setPower(-(-(this.gamepad1.right_stick_y) + (this.gamepad1.right_stick_x) - (this.gamepad1.left_stick_y) - (this.gamepad1.left_stick_x)) * speed);
-        motorBR.setPower((-(this.gamepad1.right_stick_y) - (this.gamepad1.right_stick_x) - (this.gamepad1.left_stick_y) + (this.gamepad1.left_stick_x)) * speed);
-        motorFR.setPower(-((this.gamepad1.right_stick_y) + (this.gamepad1.right_stick_x) + (this.gamepad1.left_stick_y) + (this.gamepad1.left_stick_x)) * speed);
+        motorFL.setPower(((gamepad1.right_stick_y) - (gamepad1.right_stick_x) + ((gamepad1.left_stick_y)) - (gamepad1.left_stick_x)) * speed);
+        motorBL.setPower(-(-(gamepad1.right_stick_y) + (gamepad1.right_stick_x) - (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
+        motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.right_stick_x) - (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
+        motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.right_stick_x) + (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
     }
     //// INTAKE SYSTEM
     /// KEYBINDS - CONTROLLER 1
