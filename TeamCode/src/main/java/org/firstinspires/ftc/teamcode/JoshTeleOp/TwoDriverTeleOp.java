@@ -52,10 +52,10 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // function to update telemetry
     public void TelemetryUpdate() {
         telemetry.addData("Speed", mode);
-        telemetry.addData("Bucket Positio", bucketstate);
-        telemetry.addData("Lift Positio", Lift.getCurrentPosition());
-        telemetry.addData("Drone Stat", dronestate);
-        telemetry.addData("Pullup Pos", PullUp.getCurrentPosition());
+        telemetry.addData("Bucket Position", bucketstate);
+        telemetry.addData("Lift Position", Lift.getCurrentPosition());
+        telemetry.addData("Drone State", dronestate);
+        telemetry.addData("Pullup Position", PullUp.getCurrentPosition());
         telemetry.addData("Pullup State", pullupstate);
         telemetry.update();
     }
