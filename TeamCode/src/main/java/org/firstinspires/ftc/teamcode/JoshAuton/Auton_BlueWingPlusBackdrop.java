@@ -26,26 +26,25 @@ public class Auton_BlueWingPlusBackdrop extends OpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
 
+    private String pos = "right";
+
     @Override
     public void init() {
         robot.init(hardwareMap, telemetry);
 
         initTfod();
+
+        int i = 0;
+        while (i < 300 && pos.equals("right")) {
+            pos = detectProp("Blue Marker");
+            telemetry.update();
+            sleep(10);
+            i++;
+        }
     }
 
     @Override
     public void start() {
-        String pos = "right";
-
-        int i = 0;
-        while (i < 300 && pos.equals("right")) {
-            pos = detectProp();
-            telemetry.update();
-            sleep(20);
-            i++;
-        }
-
-
         double dist;
         switch (pos) {
             case "left":

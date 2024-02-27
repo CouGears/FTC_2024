@@ -27,130 +27,165 @@ public class Auton_BlueBackdrop extends OpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
 
+    private String pos = "right";
+
     @Override
     public void init() {
         robot.init(hardwareMap, telemetry);
 
         initTfod();
-    }
-
-    @Override
-    public void start() {
-        String pos = "right";
 
         int i = 0;
         while (i < 300 && pos.equals("right")) {
             pos = detectProp("Blue Marker");
             telemetry.update();
-            sleep(20);
+            sleep(10);
             i++;
         }
+    }
 
+    @Override
+    public void start() {
 
         double dist;
         switch (pos) {
             case "left":
-                robot.drive(6, 3, 1);
+                robot.drive(0, 29, 1);
                 robot.returnAfterBusy();
-                robot.drive(0, 30, 1);
+                //robot.turn(180, 1);
+                //robot.returnAfterBusy();
+                robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry); //Mv lift out of way
+                robot.moveLift(1000, 1, telemetry);
                 robot.returnAfterBusy();
-                robot.middle(0.5); // Drop on spike mark
+                robot.middle(0.5);
                 sleep(1000);
                 robot.middle(0);
-                robot.drive(-6, 0, 1); //Mv back
+                robot.drive(-7, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(0, -10, 1); //Mv sideways to wall
+                robot.drive(0, -12, 1);
                 robot.returnAfterBusy();
-                robot.drive(30, 0, 1); //Mv to canvas
+                robot.drive(30, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(50, 0, 0.2); //Mv up to cnavas
+                robot.drive(20, 0, 0.2);
                 dist = robot.getBackdropDistance();
-                while (dist > 3.5) { //While not close enough, keep getting closer
+                // wait until robot is less than 3.5 inches from the backdrop
+                while (dist > 3.5) {
                     dist = robot.getBackdropDistance();
                 }
-                robot.stopWheels(); //When we get to target distance, stop
-                robot.drive(0, 0, 1); //Mv to canvas
+
+                // stop the wheels
+                robot.stopWheels();
+                robot.drive(0, 2, 1);
                 robot.returnAfterBusy();
-                robot.setDropServo(.5); //Drop pixel
+                robot.drive(.5, 0, 1); //Mv to spike mark
+                robot.returnAfterBusy();
+                // drop the pixel
+                robot.setDropServo(.5);
                 sleep(1000);
-                robot.drive(-3, 0, 0.4); //Mv back to wall
+                // park
+                robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
-                sleep(1000);
-                robot.drive(0, -18, 1); //Park
-                robot.returnAfterBusy();
-                robot.drive(10, 0, 1);
-                robot.returnAfterBusy();
-                break;
-            case "middle":
-                robot.drive(0, 32, 1); //Mv to spike
-                robot.returnAfterBusy();
-                robot.turn(90, 1); //Turn to orient w/ spike mark
-                robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry); //Mv lift out of way
-                robot.returnAfterBusy();
-                robot.middle(1); //Drop pixel
-                sleep(1000);
-                robot.middle(0);
-                robot.drive(-6, 0,1); //Mv back off pixel
-                robot.returnAfterBusy();
-                robot.turn(-90, 1); //Face backdrop
-                robot.returnAfterBusy();
-                robot.drive(30, 0, 1); //Mv to canvas
-                robot.returnAfterBusy();
-                robot.drive(10, 0, 0.2);
-                dist = robot.getBackdropDistance();
-                while (dist > 3.5) { //While not close enough, keep getting closer
-                    dist = robot.getBackdropDistance();
-                }
-                robot.stopWheels(); //When we get to target distance, stop
-                robot.drive(0, 2, 1); //Mv sideways
-                robot.returnAfterBusy();
-                robot.setDropServo(0.5); //Drop pixel
-                sleep(1000);
-                robot.drive(-2, 0, 0.5); //move to wall
-                robot.returnAfterBusy();
-                robot.setDropServo(0.045);
-                robot.moveLift(-500, 1, telemetry); //Park
-                robot.drive(0, -24, 1);
+                robot.moveLift(-1000, 1, telemetry);
+
+                robot.drive(0, -16, 1);
                 robot.returnAfterBusy();
                 robot.drive(12, 0, 1);
                 robot.returnAfterBusy();
                 break;
-            case "right":
-                robot.drive(0, 33, 1); //Mv to spike mark
+            case "middle":
+                // drive to prop
+                robot.drive(0, 21, 1);
                 robot.returnAfterBusy();
-                robot.backIntake(1); //Start reving back wheel
-                sleep(500);
-                robot.middle(-1); //Push pixel out
-                sleep(1500);
-                robot.backIntake(0);
+                robot.turn(90, 1);
+                robot.returnAfterBusy();
+                robot.drive(14, 0, 1);
+                robot.returnAfterBusy();
+                // move lift out of the day
+                robot.moveLift(1000, 1, telemetry);
+                // drop pixel
+                robot.middle(.5);
+                sleep(1000);
                 robot.middle(0);
-                robot.drive(-4, 0, 1);//Lightly push pixel on mark
+                // back up
+                robot.drive(-9, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(34, 0, 1); //Move to middle drop pos
+                // Turn and move to backdrop
+                robot.turn(-90, 1);
                 robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry); //Raise lift
+                robot.drive(31, 0, 1);
                 robot.returnAfterBusy();
-                robot.drive(10, 0, 0.2);
+                // drive towards backdrop at 20% speed
+                robot.drive(20, 0, 0.2);
                 dist = robot.getBackdropDistance();
-                while (dist > 3.5) { //While not close enough, keep getting closer
+                // wait until robot is less than 3.5 inches from the backdrop
+                while (dist > 3.5) {
                     dist = robot.getBackdropDistance();
                 }
-                robot.stopWheels(); //When we get to target distance, stop
-                robot.drive(0.5, 2, 1); //Mv to right drop pos
+
+                // stop the wheels
+                robot.stopWheels();
+                robot.drive(.5, 0, 1); //Mv to spike mark
                 robot.returnAfterBusy();
-                robot.setDropServo(.5); //Drop pixel
-                sleep(1000);
-                robot.drive(-2, 0, 0.5); //Move to wall
+                // drop the pixel
+                robot.setDropServo(.5);
+                sleep(500);
+                // park
+                robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
-                robot.moveLift(-500, 1, telemetry); //Park
-                robot.drive(0, -32, 1);
+                robot.moveLift(-1000, 1, telemetry);
+                robot.drive(0, -24, 1);
+                robot.returnAfterBusy();
+                robot.drive(14, 0, 1);
+                robot.returnAfterBusy();
+                break;
+            case "right":
+                robot.drive(0, 29, 1);
+                robot.returnAfterBusy();
+                robot.turn(180, 1);
                 robot.returnAfterBusy();
                 robot.drive(7, 0, 1);
+                robot.returnAfterBusy();
+                robot.moveLift(1000, 1, telemetry);
+                robot.returnAfterBusy();
+                robot.middle(0.5);
+                sleep(1000);
+                robot.middle(0);
+                robot.drive(-15, 0, 1);
+                robot.returnAfterBusy();
+                robot.turn(180, 1);
+                robot.returnAfterBusy();
+                robot.drive(0, 0, 1);
+                robot.returnAfterBusy();
+                robot.drive(26, 0, 1);
+                robot.returnAfterBusy();
+                robot.drive(0, -12, 1);
+                robot.returnAfterBusy();
+
+                robot.drive(20, 0, 0.2);
+                dist = robot.getBackdropDistance();
+                // wait until robot is less than 3.5 inches from the backdrop
+                while (dist > 3.5) {
+                    dist = robot.getBackdropDistance();
+                }
+
+                // stop the wheels
+                robot.stopWheels();
+                robot.drive(.5, 0, 1); //Mv to spike mark
+                robot.returnAfterBusy();
+                // drop the pixel
+                robot.setDropServo(.5);
+                sleep(1000);
+                // park
+                robot.drive(-4, 0, 0.5);
+                robot.returnAfterBusy();
+                robot.setDropServo(0.045);
+                robot.moveLift(-1000, 1, telemetry);
+                robot.drive(0, -18, 1);
+                robot.returnAfterBusy();
+                robot.drive(14, 0, 1);
                 robot.returnAfterBusy();
                 break;
         }

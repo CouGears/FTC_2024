@@ -26,32 +26,26 @@ public class Auton_BlueWing extends OpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
 
-    // init function
+    private String pos = "right";
+
     @Override
     public void init() {
         robot.init(hardwareMap, telemetry);
 
         initTfod();
+
+        int i = 0;
+        while (i < 300 && pos.equals("right")) {
+            pos = detectProp("Blue Marker");
+            telemetry.update();
+            sleep(10);
+            i++;
+        }
     }
 
     // code to run on auton start
     @Override
     public void start() {
-        // set inital pos to right
-        String pos = "right";
-
-        int i = 0;
-        // run until a prop is detected on the left/middle spike mark (max 300)
-        while (i < 300 && pos.equals("right")) {
-            // scan for prop
-            pos = detectProp("Blue Marker");
-            telemetry.update();
-            // wait 20ms
-            sleep(20);
-            i++;
-        }
-
-
         double dist;
         switch (pos) {
             // if prop is on left spike mark

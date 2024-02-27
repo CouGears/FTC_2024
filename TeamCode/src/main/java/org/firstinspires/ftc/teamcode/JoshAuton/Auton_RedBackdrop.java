@@ -26,31 +26,27 @@ public class Auton_RedBackdrop extends OpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
 
-    // robot init function
+    private String pos = "right";
+
     @Override
     public void init() {
         robot.init(hardwareMap, telemetry);
 
         initTfod();
+
+        int i = 0;
+        while (i < 300 && pos.equals("right")) {
+            pos = detectProp("Blue Marker");
+            telemetry.update();
+            sleep(10);
+            i++;
+        }
     }
 
 
     // code to run on auton start
     @Override
     public void start() {
-        // inital value of position (by default I set the inital value of pos to right because the camera will not detect that position)
-        String pos = "right";
-
-        // scan for a prop 300 times (unless a prop is found)
-        int i = 0;
-        while (i < 300 && pos.equals("right")) {
-            // update pos
-            pos = detectProp("Red Marker");
-            telemetry.update();
-            // wait 10ms
-            sleep(10);
-            i++;
-        }
 
         // initialize distance variable here
         double dist;
