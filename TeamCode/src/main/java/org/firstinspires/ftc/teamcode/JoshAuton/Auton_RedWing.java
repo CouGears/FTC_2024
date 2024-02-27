@@ -73,7 +73,7 @@ public class Auton_RedWing extends OpMode {
                 robot.returnAfterBusy();
                 robot.turn(90, 1);
                 robot.returnAfterBusy();
-                robot.drive(14, 0, 1);
+                robot.drive(18, 0, 1);
                 robot.returnAfterBusy();
                 // move lift out of the day
                 robot.moveLift(1000, 1, telemetry);
