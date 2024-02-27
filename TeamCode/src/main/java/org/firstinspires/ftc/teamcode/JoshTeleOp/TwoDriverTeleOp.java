@@ -245,8 +245,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
     //// INTAKE STRING/PULLEY SYSTEM
     /// KEYBINDS - CONTROLLER 2
-    // D-PAD RIGHT: LOWER INTAKE SYSTEM
-    // D-PAD LEFT: RAISE INTAKE SYSTEM
+    // RIGHT TRIGGER: LOWER BACK INTAKE SYSTEM
+    // LEFT TRIGGER: RAISE BACK INTAKE SYSTEM
     private void intakeStringSystem() {
         if ((gamepad2.right_trigger > .1) || (5 < mRunTime.time() && mRunTime.time() < 10))
         {
