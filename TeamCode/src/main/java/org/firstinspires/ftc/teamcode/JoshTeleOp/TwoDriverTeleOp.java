@@ -451,19 +451,33 @@ public class TwoDriverTeleOp extends LinearOpMode {
     /// KEYBINDS - CONTROLLER 1
     // D-PAD LEFT: DROP PIXEL (FROM BUCKET)
     private void bucketSystem() {
+        // IF CONTROLLER 1'S D-PAD LEFT BUTTON IS PRESSED
         if (gamepad1.dpad_left) {
+            // ???
             dropDelay++;
+            // IF ???
             if (dropDelay >= 10){
+                // MOVE THE BUCKET TO IT'S DROPPING POSITION
                 DropServo.setPosition(.5);
+                // ???
                 dropDelay = 0;
+                // UPDATE THE BUCKET STATE VARIABLE FOR TELEMETRY
                 bucketstate = "DROPPING";
             }
-        } else {
+        }
+        // IF CONTROLLER 1'S D-PAD LEFT BUTTON IS NOT PRESSED
+        else {
+            // MOVE THE BUCKET TO IT'S INITIAL POSITION
             DropServo.setPosition(.045);
+            // UPDATE THE BUCKET STATE VARIABLE FOR TELEMETRY
             bucketstate = "INITIAL POSITION";
         }
     }
 
+    //// MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
+    /// NO KEYBINDS
+    // NOT SURE EXACTLY HOW THIS WORKS - NOT GOING TO COMMENT IT
+    // - JOSH
     private void middleIntakePixelColorSystem() {
         // color sensors 1- green 2-purple 3- yellow all- white (4)
         if ((color.green()> 2000 && color.blue()> 2000)||(color2.green()> 2000 && color2.blue()> 2000)) {
