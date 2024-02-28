@@ -121,6 +121,9 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // RESET LIFT MOTOR ENCODER
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        // ALLOW LIFT TO MOVE
+        Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         // ADD DATA TO TELEMETRY
         telemetry.addData("Status", "Initialized");
         // UPDATE TELEMETRY ON DRIVER STATION
