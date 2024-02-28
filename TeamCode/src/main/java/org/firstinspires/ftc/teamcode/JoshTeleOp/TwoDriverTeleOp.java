@@ -205,7 +205,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
                     motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.right_stick_x) - (gamepad1.left_stick_y)) * speed);
                     motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.right_stick_x) + (gamepad1.left_stick_y)) * speed);
                 }
-                // IF THE LIFT IS NOT AT IT'S LIMIT OR BOTH OF THE JOYSTICKS DO NOT HAVE POSITIVE VALUES
+                // IF THE LIFT IS NOT AT IT'S LIMIT OR BOTH OF THE JOYSTICKS DO NOT HAVE POSITIVE
+                // VALUES
                 else {
                     // STANDARD DRIVE SYSTEM
                     motorFL.setPower(((gamepad1.right_stick_y) - (gamepad1.right_stick_x) + (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
@@ -293,30 +294,38 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // THE SINE OF 15 DEGREES
         // AN ADJUSTMENT CONSTANT
         double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
-        // INITIALIZE AND DEFINE THE AMOUNT OF MOTOR ENCODER UNITS (1620 RPM DC MOTOR) FOR 1 INCH OF LINEAR SLIDE MOVEMENT
+        // INITIALIZE AND DEFINE THE AMOUNT OF MOTOR ENCODER UNITS (1620 RPM DC MOTOR)
+        // FOR 1 INCH OF LINEAR SLIDE MOVEMENT
         final int liftEncoderPerInch = 22;
-        // INITIALIZE AND DEFINE VARIABLE FOR THE LIFT LIMIT IN MOTOR ENCODER UNITS (1620 RPM DC MOTOR)
+        // INITIALIZE AND DEFINE VARIABLE FOR THE LIFT LIMIT IN MOTOR ENCODER UNITS
+        // (1620 RPM DC MOTOR)
         int liftLimit = (int) (liftEncoderPerInch * liftLimitInches);
-        // IF THE CALCULATED LIFT LIMIT IS MORE THAN THE ULTIMATE MAXIMUM LIFT LIMIT (FULLY EXTENDED LINEAR SLIDE)
+        // IF THE CALCULATED LIFT LIMIT IS MORE THAN THE ULTIMATE MAXIMUM LIFT LIMIT
+        // (FULLY EXTENDED LINEAR SLIDE)
         if (liftLimit > 600) {
             // SET THE LIFT LIMIT TO THE ULTIMATE MAXIMUM LIFT LIMIT (FULLY EXTENDED LINEAR SLIDE)
             liftLimit = 600;
         }
 
         // IF CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LIMIT
-        // OR CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS PRESSED (OVERRIDE LIMIT BUTTON)
+        // OR CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS
+        // PRESSED (OVERRIDE LIMIT BUTTON)
         if ((gamepad1.dpad_up && Lift.getCurrentPosition() <= liftLimit) || (gamepad1.dpad_up && gamepad1.dpad_right)) {
             // RAISE THE LIFT AT FULL SPEED
             Lift.setPower(1);
         }
-        // IF CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LOWEST POSSIBLE POSITION
-        // OR CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS PRESSED (OVERRIDE LIMIT BUTTON)
+        // IF CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LOWEST
+        // POSSIBLE POSITION
+        // OR CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON
+        // IS PRESSED (OVERRIDE LIMIT BUTTON)
         else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) || (gamepad1.dpad_down && gamepad1.dpad_right)) {
             // LOWER THE LIFT AT HALF SPEED
             Lift.setPower(-.5);
         }
-        // IF CONTROLLER 1'S D-PAD UP BUTTON IS NOT PRESSED OR THE LIFT IS AT IT'S LIMIT AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
-        // AND CONTROLLER 1'S D-PAD DOWN BUTTON IS NOT PRESSED OR THE LIFT IS AT IT'S LOWEST POSITION AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
+        // IF CONTROLLER 1'S D-PAD UP BUTTON IS NOT PRESSED OR THE LIFT IS AT IT'S LIMIT AND
+        // CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
+        // AND CONTROLLER 1'S D-PAD DOWN BUTTON IS NOT PRESSED OR THE LIFT IS AT IT'S LOWEST
+        // POSITION AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
         else {
             // DON'T MOVE THE LIFT
             Lift.setPower(0);
@@ -337,12 +346,14 @@ public class TwoDriverTeleOp extends LinearOpMode {
         }
         // IF CONTROLLER 2'S D-PAD DOWN BUTTON IS PRESSED
         else if (gamepad1.dpad_down) {
-            // CALL PULLUP SYSTEM B AFTER THE NEXT TELEMETRY UPDATE AND PAUSE ALL OTHER SYSTEMS FROM BEING CALLED
+            // CALL PULLUP SYSTEM B AFTER THE NEXT TELEMETRY UPDATE AND PAUSE ALL OTHER SYSTEMS
+            // FROM BEING CALLED
             pullup = true;
             // UPDATE THE PULLUP STATE VARIABLE FOR TELEMETRY
             pullupstate = "RETRACTING";
         }
-        // IF CONTROLLER 2'S D-PAD UP BUTTON IS NOT PRESSED AND CONTROLLER 2'S D-PAD DOWN BUTTON IS NOT PRESSED
+        // IF CONTROLLER 2'S D-PAD UP BUTTON IS NOT PRESSED AND CONTROLLER 2'S D-PAD DOWN BUTTON
+        // IS NOT PRESSED
         else {
             // DO NOT MOVE THE PULLUP HOOK
             PullUp.setPower(0);
@@ -356,7 +367,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // D-PAD LEFT: STOP PULLING UP AND RETURN TO DRIVER CONTROL
     // D-PAD RIGHT: STOP PULLING UP AND RETURN TO DRIVER CONTROL
     private void pullupSystemB() {
-        // IF CONTROLLER 2'S D-PAD LEFT BUTTON IS PRESSED OR CONTROLLER 2'S D-PAD RIGHT BUTTON IS PRESSED
+        // IF CONTROLLER 2'S D-PAD LEFT BUTTON IS PRESSED OR CONTROLLER 2'S D-PAD RIGHT BUTTON
+        // IS PRESSED
         if (gamepad2.dpad_left || gamepad2.dpad_right) {
             // CALL OTHER SYSTEMS AFTER THE NEXT TELEMETRY UPDATE
             pullup = false;
@@ -371,12 +383,24 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // RIGHT TRIGGER: LOWER BACK INTAKE SYSTEM
     // LEFT TRIGGER: RAISE BACK INTAKE SYSTEM
     private void intakeStringSystem() {
+        // IF CONTROLLER 2'S RIGHT TRIGGER IS MORE THAN 10% PRESSED OR THE TIME SINCE THE START OF
+        // TELEOP PHASE IS BETWEEN 5 AND 10 SECONDS
         if ((gamepad2.right_trigger > .1) || (5 < mRunTime.time() && mRunTime.time() < 10))
         {
+            // LOWER THE BACK INTAKE SYSTEM (PRESSING DOWN MORE ON THE RIGHT TRIGGER WILL MAKE THE
+            // BACK INTAKE SYSTEM LOWER FASTER)
             IntakeString.setPower(gamepad2.right_trigger);
-        } else if (gamepad2.left_trigger > .1) {
+        }
+        // IF CONTROLLER 2'S LEFT TRIGGER IS MORE THAN 10% PRESSED
+        else if (gamepad2.left_trigger > .1) {
+            // RAISE THE BACK INTAKE SYSTEM (PRESSING DOWN MORE ON THE LEFT TRIGGER WILL MAKE THE
+            // BACK INTAKE SYSTEM RAISE FASTER)
             IntakeString.setPower(-gamepad2.left_trigger);
-        } else {
+        }
+        // IF CONTROLLER 2'S RIGHT TRIGGER AND LEFT TRIGGER ARE BOTH NOT PRESSED MORE THAN 10% AND
+        // THE TIME SINCE THE START OF TELEOP IS NOT BETWEEN 5 AND 10 SECONDS
+        else {
+            // DO NOT RAISE OR LOWER THE BACK INTAKE SYSTEM
             IntakeString.setPower(0.0);
         }
     }
@@ -386,12 +410,19 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // A: FAST MODE
     // B: SLOW MODE
     private void speedSystem() {
+        // IF CONTROLLER 1'S A BUTTON IS PRESSED
         if (gamepad1.a) {
+            // SET THE SPEED TO FULL SPEED
             speed = 1;
+            // UPDATE THE MODE/SPEED VARIABLE FOR TELEMETRY
             mode = "FAST";
 
-        } else if (gamepad1.b) {
+        }
+        // IF CONTROLLER 1'S B BUTTON IS PRESSED
+        else if (gamepad1.b) {
+            // SET THE SPEED TO HALF SPEED
             speed = 0.5;
+            // UPDATE THE MODE/SPEED VARIABLE FOR TELEMETRY
             mode = "SLOW";
         }
     }
