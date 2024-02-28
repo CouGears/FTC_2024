@@ -275,35 +275,50 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // D-PAD DOWN: LOWER LIFT
     // D-PAD RIGHT: OVERRIDE LIFT LIMIT
     private void liftSystem() {
-        // robot distance from backdrop
+        // INITIALIZE AND DEFINE VARIABLE FOR ROBOT'S DISTANCE FROM BACKDROP IN INCHES
         double distanceFromBackdrop = BackdropDistance.getDistance(DistanceUnit.INCH);
 
-        // 120 degrees in radians
-        double radian120 = 120 * (3.14/180);
-        // 15 degrees in radians
-        double radian15 = 15 * (3.14/180);
+        // INITIALIZE AND DEFINE VARIABLE FOR 120 DEGREES IN RADIANS
+        final double radian120 = 120 * (3.14/180);
+        // INITIALIZE AND DEFINE VARIABLE FOR 15 DEGREES IN RADIANS
+        final double radian15 = 15 * (3.14/180);
 
-        // sine of 120 degrees
-        double sin120 = Math.sin(radian120);
-        // sine of 15 degrees
-        double sin15 = Math.sin(radian15);
-        // lift limit in inches
+        // INITIALIZE AND DEFINE VARIABLE FOR THE SINE OF 120 DEGREES
+        final double sin120 = Math.sin(radian120);
+        // INITIALIZE AND DEFINE VARIABLE FOR THE SINE OF 15 DEGREES
+        final double sin15 = Math.sin(radian15);
+        /// INITIALIZE AND DEFINE VARIABLE FOR THE LIFT LIMIT IN INCHES USING:
+        // THE ROBOT'S DISTANCE FROM THE BACKDROP IN INCHES
+        // THE SINE OF 120 DEGREES
+        // THE SINE OF 15 DEGREES
+        // AN ADJUSTMENT CONSTANT
         double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
-        // lift motor encoder units per inch of linear slide movement
-        int liftEncoderPerInch = 22;
-        // lift limit in motor encoder units
+        // INITIALIZE AND DEFINE THE AMOUNT OF MOTOR ENCODER UNITS (1620 RPM DC MOTOR) FOR 1 INCH OF LINEAR SLIDE MOVEMENT
+        final int liftEncoderPerInch = 22;
+        // INITIALIZE AND DEFINE VARIABLE FOR THE LIFT LIMIT IN MOTOR ENCODER UNITS (1620 RPM DC MOTOR)
         int liftLimit = (int) (liftEncoderPerInch * liftLimitInches);
-        // if the limit is calculated to be more than the ultimate maximum (fully extended linear slide)
+        // IF THE CALCULATED LIFT LIMIT IS MORE THAN THE ULTIMATE MAXIMUM LIFT LIMIT (FULLY EXTENDED LINEAR SLIDE)
         if (liftLimit > 600) {
-            // set the limit to the ultimate maximum (fully extended linear slide)
+            // SET THE LIFT LIMIT TO THE ULTIMATE MAXIMUM LIFT LIMIT (FULLY EXTENDED LINEAR SLIDE)
             liftLimit = 600;
         }
 
+        // IF CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LIMIT
+        // OR CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS PRESSED (OVERRIDE LIMIT BUTTON)
         if ((gamepad1.dpad_up && Lift.getCurrentPosition() <= liftLimit) || (gamepad1.dpad_up && gamepad1.dpad_right)) {
+            // RAISE THE LIFT AT FULL SPEED
             Lift.setPower(1);
-        } else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) || (gamepad1.dpad_down && gamepad1.dpad_right)) {
+        }
+        // IF CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LOWEST POSSIBLE POSITION
+        // OR CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS PRESSED (OVERRIDE LIMIT BUTTON)
+        else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) || (gamepad1.dpad_down && gamepad1.dpad_right)) {
+            // LOWER THE LIFT AT HALF SPEED
             Lift.setPower(-.5);
-        } else {
+        }
+        // IF CONTROLLER 1'S D-PAD UP BUTTON IS NOT PRESSED OR THE LIFT IS AT IT'S LIMIT AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
+        // AND CONTROLLER 1'S D-PAD DOWN BUTTON IS NOT PRESSED OR THE LIFT IS AT IT'S LOWEST POSITION AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
+        else {
+            // DON'T MOVE THE LIFT
             Lift.setPower(0);
         }
     }
