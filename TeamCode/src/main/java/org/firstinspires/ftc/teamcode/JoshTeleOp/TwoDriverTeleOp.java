@@ -305,7 +305,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
         // INITIALIZE AND DEFINE THE AMOUNT OF MOTOR ENCODER UNITS (1620 RPM DC MOTOR)
         // FOR 1 INCH OF LINEAR SLIDE MOVEMENT
-        final int liftEncoderPerInch = 107;
+        final int liftEncoderPerInch = 81;
         // INITIALIZE AND DEFINE VARIABLE FOR THE LIFT LIMIT IN MOTOR ENCODER UNITS
         // (1620 RPM DC MOTOR)
         int liftLimit = (int) (liftEncoderPerInch * liftLimitInches);
