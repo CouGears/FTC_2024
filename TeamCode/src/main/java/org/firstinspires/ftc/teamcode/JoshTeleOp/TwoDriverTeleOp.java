@@ -328,17 +328,25 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // D-PAD UP: EXTEND PULLUP ARM
     // D-PAD DOWN: RETRACT PULLUP ARM (PULLUP) AND SHUT DOWN DRIVER CONTROLS
     private void pullupSystemA() {
+        // IF CONTROLLER 2'S D-PAD UP BUTTON IS PRESSED
         if (gamepad2.dpad_up) {
-            // Control to pull up
+            // RAISE THE PULLUP HOOK
             PullUp.setPower(1.0);
+            // UPDATE THE PULLUP STATE VARIABLE FOR TELEMETRY
             pullupstate = "EXTENDING";
-        } else if (gamepad1.dpad_down) {
-            // Control to release down
+        }
+        // IF CONTROLLER 2'S D-PAD DOWN BUTTON IS PRESSED
+        else if (gamepad1.dpad_down) {
+            // CALL PULLUP SYSTEM B AFTER THE NEXT TELEMETRY UPDATE AND PAUSE ALL OTHER SYSTEMS FROM BEING CALLED
             pullup = true;
+            // UPDATE THE PULLUP STATE VARIABLE FOR TELEMETRY
             pullupstate = "RETRACTING";
-        } else {
-            // Ensure the motor stops if no buttons are pressed and not in active mode
+        }
+        // IF CONTROLLER 2'S D-PAD UP BUTTON IS NOT PRESSED AND CONTROLLER 2'S D-PAD DOWN BUTTON IS NOT PRESSED
+        else {
+            // DO NOT MOVE THE PULLUP HOOK
             PullUp.setPower(0);
+            // UPDATE THE PULLUP STATE VARIABLE FOR TELEMETRY
             pullupstate = "STATIONARY";
         }
     }
@@ -348,9 +356,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // D-PAD LEFT: STOP PULLING UP AND RETURN TO DRIVER CONTROL
     // D-PAD RIGHT: STOP PULLING UP AND RETURN TO DRIVER CONTROL
     private void pullupSystemB() {
+        // IF CONTROLLER 2'S D-PAD LEFT BUTTON IS PRESSED OR CONTROLLER 2'S D-PAD RIGHT BUTTON IS PRESSED
         if (gamepad2.dpad_left || gamepad2.dpad_right) {
+            // CALL OTHER SYSTEMS AFTER THE NEXT TELEMETRY UPDATE
             pullup = false;
         }
+        // IF THE ROBOT IS HOOKED ON TO THE PULLUP BAR: PULL THE ROBOT UP
+        // IF THE ROBOT IS NOT HOOKED ON TO THE PULLUP BAR: LOWER THE PULLUP HOOK
         PullUp.setPower(-1.0);
     }
 
