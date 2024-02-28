@@ -129,38 +129,41 @@ public class TwoDriverTeleOp extends LinearOpMode {
         mRunTime.reset();
         // UPDATE TELEMETRY
         TelemetryUpdate();
-        // WHILE ROBOT IS NOT ACTIVELY PULLING UP & OPMODE IS ACTIVE
-        while (!pullup && opModeIsActive()) {
-            //// CALL SYSTEM FUNCTIONS
-            // CALL BUCKET SYSTEM FUNCTION
-            bucketSystem();
-            // CALL DRONE SYSTEM FUNCTION
-            droneSystem();
-            // CALL SPEED SYSTEM FUNCTION
-            speedSystem();
-            // CALL INTAKE SYSTEM FUNCTION
-            intakeSystem();
-            // CALL PULLUP SYSTEM A FUNCTION
-            pullupSystemA();;
-            // CALL DRIVE SYSTEM FUNCTION MODE 1
-            // MODE 0: REGULAR DRIVE SYSTEM
-            // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
-            // (cont.) TOUCHING THE BACKDROP
-            driveSystem(1);
-            // CALL INTAKE STRING/PULLEY SYSTEM
-            intakeStringSystem();
-            // CALL MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
-            middleIntakePixelColorSystem();
-            // CALL LIFT SYSTEM
-            liftSystem();
-            // UPDATE TELEMETRY WITH UPDATED DATA
-            TelemetryUpdate();
+        while (opModeIsActive()) {
+            // WHILE ROBOT IS NOT ACTIVELY PULLING UP & OPMODE IS ACTIVE
+            while (!pullup && opModeIsActive()) {
+                //// CALL SYSTEM FUNCTIONS
+                // CALL BUCKET SYSTEM FUNCTION
+                bucketSystem();
+                // CALL DRONE SYSTEM FUNCTION
+                droneSystem();
+                // CALL SPEED SYSTEM FUNCTION
+                speedSystem();
+                // CALL INTAKE SYSTEM FUNCTION
+                intakeSystem();
+                // CALL PULLUP SYSTEM A FUNCTION
+                pullupSystemA();;
+                // CALL DRIVE SYSTEM FUNCTION MODE 1
+                // MODE 0: REGULAR DRIVE SYSTEM
+                // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
+                // (cont.) TOUCHING THE BACKDROP
+                driveSystem(1);
+                // CALL INTAKE STRING/PULLEY SYSTEM
+                intakeStringSystem();
+                // CALL MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
+                middleIntakePixelColorSystem();
+                // CALL LIFT SYSTEM
+                liftSystem();
+                // UPDATE TELEMETRY WITH UPDATED DATA
+                TelemetryUpdate();
+            }
+            // WHILE ROBOT IS ACTIVELY PULLING UP
+            while (pullup && opModeIsActive()) {
+                // CALL PULLUP SYSTEM B
+                pullupSystemB();
+            }
         }
-        // WHILE ROBOT IS ACTIVELY PULLING UP
-        while (pullup && opModeIsActive()) {
-            // CALL PULLUP SYSTEM B
-            pullupSystemB();
-        }
+
 
     }
 
