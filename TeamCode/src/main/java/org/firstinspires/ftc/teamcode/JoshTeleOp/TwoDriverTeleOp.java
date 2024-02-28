@@ -31,7 +31,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // VARIABLE FOR COLOR SENSOR SYSTEM
     private int pixel_color = 0;
     // LIFT LIMIT
-    private int liftLimit = 600;
+    private int liftLimit = 3000;
     // VARIABLE FOR PULLUP SYSTEMS A & B
     private boolean pullup = false;
     // NOT SURE WHAT THIS DOES
@@ -299,15 +299,15 @@ public class TwoDriverTeleOp extends LinearOpMode {
         double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
         // INITIALIZE AND DEFINE THE AMOUNT OF MOTOR ENCODER UNITS (1620 RPM DC MOTOR)
         // FOR 1 INCH OF LINEAR SLIDE MOVEMENT
-        final int liftEncoderPerInch = 22;
+        final int liftEncoderPerInch = 107;
         // INITIALIZE AND DEFINE VARIABLE FOR THE LIFT LIMIT IN MOTOR ENCODER UNITS
         // (1620 RPM DC MOTOR)
         int liftLimit = (int) (liftEncoderPerInch * liftLimitInches);
         // IF THE CALCULATED LIFT LIMIT IS MORE THAN THE ULTIMATE MAXIMUM LIFT LIMIT
         // (FULLY EXTENDED LINEAR SLIDE)
-        if (liftLimit > 600) {
+        if (liftLimit > 3000) {
             // SET THE LIFT LIMIT TO THE ULTIMATE MAXIMUM LIFT LIMIT (FULLY EXTENDED LINEAR SLIDE)
-            liftLimit = 600;
+            liftLimit = 3000;
         }
 
         // IF CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LIMIT
