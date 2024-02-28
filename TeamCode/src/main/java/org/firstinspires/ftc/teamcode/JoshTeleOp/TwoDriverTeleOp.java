@@ -322,8 +322,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // OR CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON
         // IS PRESSED (OVERRIDE LIMIT BUTTON)
         else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) || (gamepad1.dpad_down && gamepad1.dpad_right)) {
-            // LOWER THE LIFT AT HALF SPEED
-            Lift.setPower(-.5);
+            // LOWER THE LIFT AT FULL SPEED
+            Lift.setPower(-1);
         }
         // IF CONTROLLER 1'S D-PAD UP BUTTON IS NOT PRESSED OR THE LIFT IS AT IT'S LIMIT AND
         // CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
