@@ -224,25 +224,46 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // RIGHT TRIGGER: REVERSE BACK INTAKE
     // LEFT TRIGGER: REVERSE MIDDLE INTAKE
     private void intakeSystem() {
+        // IF CONTROLLER 1'S Y BUTTON IS PRESSED OR BOTH OF CONTROLLER 1'S BUMPERS ARE PRESSED
         if (gamepad1.y || (gamepad1.right_bumper && gamepad1.left_bumper)) {
+            // RUN BOTH INTAKES
             BackIntake.setPower(1);
             MiddleIntake.setPower(-1);
-        } else if (gamepad1.x || ((gamepad1.right_trigger > 0) && (gamepad1.left_trigger > 0))) {
+        }
+        // IF CONTROLLER 1'S X BUTTON IS PRESSED OR BOTH OF CONTROLLER 1'S TRIGGERS ARE PRESSED
+        else if (gamepad1.x || ((gamepad1.right_trigger > 0) && (gamepad1.left_trigger > 0))) {
+            // RUN BOTH INTAKES IN REVERSE
             BackIntake.setPower(-1);
             MiddleIntake.setPower(1);
-        }  else if (gamepad1.right_bumper) {
+        }
+        // IF CONTROLLER 1'S RIGHT BUMPER IS PRESSED
+        else if (gamepad1.right_bumper) {
+            // RUN BACK INTAKE ONLY
             BackIntake.setPower(1);
             MiddleIntake.setPower(0);
-        } else if (gamepad1.left_bumper) {
+        }
+        // IF CONTROLLER 1'S LEFT BUMPER IS PRESSED
+        else if (gamepad1.left_bumper) {
+            // RUN MIDDLE INTAKE ONLY
             MiddleIntake.setPower(-1);
             BackIntake.setPower(0);
-        } else if (gamepad1.right_trigger > 0) {
+        }
+        // IF CONTROLLER 1'S RIGHT TRIGGER IS PRESSED
+        else if (gamepad1.right_trigger > 0) {
+            // RUN BACK INTAKE ONLY IN REVERSE
             BackIntake.setPower(-1);
             MiddleIntake.setPower(0);
-        } else if (gamepad1.left_trigger > 0) {
+        }
+        // IF CONTROLLER 1'S LEFT TRIGGER IS PRESSED
+        else if (gamepad1.left_trigger > 0) {
+            // RUN MIDDLE INTAKE ONLY IN REVERSE
             MiddleIntake.setPower(1);
             BackIntake.setPower(0);
-        } else {
+        }
+        // IF CONTROLLER 1'S X BUTTON, Y BUTTON, LEFT TRIGGER, RIGHT TRIGGER, LEFT BUMPER, AND RIGHT
+        // BUMPER ARE ALL NOT PRESSED
+        else {
+            // DON'T RUN ANY INTAKES
             MiddleIntake.setPower(0);
             BackIntake.setPower(0);
         }
