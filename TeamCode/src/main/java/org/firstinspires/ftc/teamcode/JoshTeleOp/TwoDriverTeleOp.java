@@ -432,11 +432,18 @@ public class TwoDriverTeleOp extends LinearOpMode {
     /// KEYBINDS - CONTROLLER 2
     // A: LAUNCH DRONE
     private void droneSystem() {
+        // IF CONTROLLER 2'S A BUTTON IS PRESSED
         if (gamepad2.a) {
+            // LAUNCH THE DRONE
             AirplaneLaunch.setPosition(0);
-        } else {
-            AirplaneLaunch.setPosition(1);
+            // UPDATE THE DRONE STATE VARIABLE FOR TELEMETRY
             dronestate = "LAUNCHED";
+        }
+        // IF CONTROLLER 2'S A BUTTON IS NOT PRESSED
+        else {
+            // BRING THE DRONE LAUNCHING MECHANISM BACK TO IT'S INITIAL POSITION IF IT ISN'T
+            // ALREADY THERE
+            AirplaneLaunch.setPosition(1);
         }
     }
 
