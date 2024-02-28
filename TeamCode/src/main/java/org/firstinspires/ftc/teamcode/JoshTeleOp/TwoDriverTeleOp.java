@@ -345,7 +345,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
             pullupstate = "EXTENDING";
         }
         // IF CONTROLLER 2'S D-PAD DOWN BUTTON IS PRESSED
-        else if (gamepad1.dpad_down) {
+        else if (gamepad2.dpad_down) {
             // CALL PULLUP SYSTEM B AFTER THE NEXT TELEMETRY UPDATE AND PAUSE ALL OTHER SYSTEMS
             // FROM BEING CALLED
             pullup = true;
