@@ -16,53 +16,59 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @TeleOp
 public class TwoDriverTeleOp extends LinearOpMode {
     //// DEVICE DEFINITIONS
-    // JACOB COLOR SENSOR
+    // DIGITAL CHANNELS
     private DigitalChannel red1,red2, red3, green1, green2, green3;
+    // COLOR SENSORS
     private ColorSensor color, color2;
-
     // DC MOTORS
     public static DcMotor motorBR, motorBL, motorFL, motorFR, BackIntake, MiddleIntake, Lift, PullUp;
-    // CONTINUOUS SERVO
+    // CONTINUOUS ROTATION SERVO
     public static CRServo IntakeString;
     // SERVOS
     public static Servo DropServo, AirplaneLaunch;
     // DISTANCE SENSOR (FRONT)
     public static DistanceSensor BackdropDistance;
-    // JACOB COLOR SENSOR
+    // VARIABLE FOR COLOR SENSOR SYSTEM
     private int pixel_color = 0;
-    // lift limit
+    // LIFT LIMIT
     private int liftLimit = 600;
-    // pulling up variable i guess
+    // VARIABLE FOR PULLUP SYSTEMS A & B
     private boolean pullup = false;
-    // not sure what drop delay does
+    // NOT SURE WHAT THIS DOES
     private int dropDelay = 0;
-    // run time variable
+    // RUN TIME VARIABLE
     public ElapsedTime mRunTime = new ElapsedTime();
-    // robot speed variable
+    // SPEED OF THE ROBOT
+    // RANGE: [-1, 1]
+    // 1 = FULL SPEED
+    // -1 = REVERSE FULL SPEED
     private double speed = 1;
-
+    // VARIABLE TO KEEP TRACK OF THE MODE/SPEED OF THE ROBOT
     private String mode = "FAST";
-
+    // VARIABLE TO KEEP TRACK OF THE STATE OF THE BUCKET SYSTEM
     private String bucketstate = "INITIAL POSITION";
-
+    // VARIABLE TO KEEP TRACK OF THE STATE OF THE DRONE SYSTEM
     private String dronestate = "ARMED";
-
+    // VARIABLE TO KEEP TRACK OF THE STATE OF THE PULLUP SYSTEM
     private String pullupstate = "STATIONARY";
 
-    // function to update telemetry
+    // TELEMETRY UPDATING FUNCIOTN
     public void TelemetryUpdate() {
+        // ADD DATA
         telemetry.addData("Speed", mode);
         telemetry.addData("Bucket Position", bucketstate);
         telemetry.addData("Lift Position", Lift.getCurrentPosition());
         telemetry.addData("Drone State", dronestate);
         telemetry.addData("Pullup Position", PullUp.getCurrentPosition());
         telemetry.addData("Pullup State", pullupstate);
+        // UPDATE TELEMETRY ON DRIVER STATION
         telemetry.update();
     }
-    // init function
+    // RUN ON ROBOT INIT
     @Override
     public void runOpMode() {
-        //region hardware map
+        //// MAP HARDWARE TO OBJECTS
+        // MAP DC MOTORS
         motorFL = hardwareMap.get(DcMotor.class, "motorFL");
         motorBL = hardwareMap.get(DcMotor.class, "motorBL");
         motorBR = hardwareMap.get(DcMotor.class, "motorBR");
@@ -70,23 +76,29 @@ public class TwoDriverTeleOp extends LinearOpMode {
         BackIntake = hardwareMap.get(DcMotor.class, "BackIntake");
         MiddleIntake = hardwareMap.get(DcMotor.class, "MiddleIntake");
         Lift = hardwareMap.get(DcMotor.class, "Lift");
+        // MAP CONTINUOUS ROTATION SERVO
         IntakeString = hardwareMap.get(CRServo.class, "IntakeString");
+        // MAP SERVOS
         DropServo = hardwareMap.get(Servo.class, "DropServo");
         AirplaneLaunch = hardwareMap.get(Servo.class, "AirplaneLaunch");
+        // MAP DC MOTOR
         PullUp = hardwareMap.get(DcMotor.class, "PullUp");
 
-        red1= hardwareMap.get(DigitalChannel.class, "red1");
-        green1= hardwareMap.get(DigitalChannel.class, "green1");
-        red2= hardwareMap.get(DigitalChannel.class, "red2");
-        green2= hardwareMap.get(DigitalChannel.class, "green2");
-        red3= hardwareMap.get(DigitalChannel.class, "red3");
-        green3= hardwareMap.get(DigitalChannel.class, "green3");
+        // MAP DIGITAL CHANNELS
+        red1 = hardwareMap.get(DigitalChannel.class, "red1");
+        green1 = hardwareMap.get(DigitalChannel.class, "green1");
+        red2 = hardwareMap.get(DigitalChannel.class, "red2");
+        green2 = hardwareMap.get(DigitalChannel.class, "green2");
+        red3 = hardwareMap.get(DigitalChannel.class, "red3");
+        green3 = hardwareMap.get(DigitalChannel.class, "green3");
         color = hardwareMap.get(ColorSensor.class, "Color");
-        color2 =hardwareMap.get(ColorSensor.class, "Color2");
+        color2 = hardwareMap.get(ColorSensor.class, "Color2");
 
+        // MAP DISTANCE SENSOR
         BackdropDistance = hardwareMap.get(DistanceSensor.class, "BackdropDistance");
 
 
+        // SET DC MOTOR ZERO POWER BEHAVIORS
         motorFL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -96,7 +108,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         PullUp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-
+        // SET DC MOTOR DIRECTIONS
         motorFL.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBL.setDirection(DcMotorSimple.Direction.FORWARD);
         motorFR.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -106,26 +118,47 @@ public class TwoDriverTeleOp extends LinearOpMode {
         Lift.setDirection(DcMotorSimple.Direction.FORWARD);
         PullUp.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        // ADD DATA TO TELEMETRY
         telemetry.addData("Status", "Initialized");
+        // UPDATE TELEMETRY ON DRIVER STATION
         telemetry.update();
 
+        // WAIT FOR OPMODE START
         waitForStart();
+        // RESET RUNTIME (ON START)
         mRunTime.reset();
-        // on teleop start
+        // UPDATE TELEMETRY
         TelemetryUpdate();
+        // WHILE ROBOT IS NOT ACTIVELY PULLING UP & OPMODE IS ACTIVE
         while (!pullup && opModeIsActive()) {
+            //// CALL SYSTEM FUNCTIONS
+            // CALL BUCKET SYSTEM FUNCTION
             bucketSystem();
+            // CALL DRONE SYSTEM FUNCTION
             droneSystem();
+            // CALL SPEED SYSTEM FUNCTION
             speedSystem();
+            // CALL INTAKE SYSTEM FUNCTION
             intakeSystem();
+            // CALL PULLUP SYSTEM A FUNCTION
             pullupSystemA();;
-            driveSystem(0);
+            // CALL DRIVE SYSTEM FUNCTION MODE 1
+            // MODE 0: REGULAR DRIVE SYSTEM
+            // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
+            // (cont.) TOUCHING THE BACKDROP
+            driveSystem(1);
+            // CALL INTAKE STRING/PULLEY SYSTEM
             intakeStringSystem();
+            // CALL MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
             middleIntakePixelColorSystem();
+            // CALL LIFT SYSTEM
             liftSystem();
+            // UPDATE TELEMETRY WITH UPDATED DATA
             TelemetryUpdate();
         }
+        // WHILE ROBOT IS ACTIVELY PULLING UP
         while (pullup && opModeIsActive()) {
+            // CALL PULLUP SYSTEM B
             pullupSystemB();
         }
 
@@ -136,30 +169,45 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // LEFT JOYSTICK: DRIVE/STRAFE
     // RIGHT JOYSTICK: DRIVE/TURN
     private void driveSystem(int mode) {
+        // RUN DIFFERENT DRIVE SYSTEM DEPENDING ON MODE
         switch (mode) {
+            // IF MODE IS 0
             case 0:
+                // STANDARD DRIVE SYSTEM
                 motorFL.setPower(((gamepad1.right_stick_y) - (gamepad1.right_stick_x) + (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
                 motorBL.setPower(-(-(gamepad1.right_stick_y) + (gamepad1.right_stick_x) - (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
                 motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.right_stick_x) - (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                 motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.right_stick_x) + (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                 break;
+            // IF MODE IS 1
             case 1:
+                // IF THE LIFT IS AT IT'S LIMIT & BOTH JOYSTICKS HAVE POSITIVE X VALUES
                 if (Lift.getCurrentPosition() == liftLimit && gamepad1.right_stick_x > 0 && gamepad1.left_stick_x > 0) {
+                    // IGNORE THE X VALUES OF BOTH JOYSTICKS
                     motorFL.setPower(((gamepad1.right_stick_y) + (gamepad1.left_stick_y)) * speed);
                     motorBL.setPower(-(-(gamepad1.right_stick_y) - (gamepad1.left_stick_y)) * speed);
                     motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.left_stick_y)) * speed);
                     motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.left_stick_y)) * speed);
-                } else if (Lift.getCurrentPosition() == liftLimit && gamepad1.right_stick_x > 0) {
+                }
+                // IF THE LIFT IS AT IT'S LIMIT & THE RIGHT JOYSTICK HAS A POSITIVE X VALUE
+                else if (Lift.getCurrentPosition() == liftLimit && gamepad1.right_stick_x > 0) {
+                    // IGNORE THE X VALUES OF THE RIGHT JOYSTICK
                     motorFL.setPower(((gamepad1.right_stick_y) + ((gamepad1.left_stick_y)) - (gamepad1.left_stick_x)) * speed);
                     motorBL.setPower(-(-(gamepad1.right_stick_y) - (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
                     motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                     motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
-                } else if (Lift.getCurrentPosition() == liftLimit && gamepad1.left_stick_x > 0) {
+                }
+                // IF THE LIFT IS AT IT'S LIMIT & THE LEFT JOYSTICK HAS A POSITIVE X VALUE
+                else if (Lift.getCurrentPosition() == liftLimit && gamepad1.left_stick_x > 0) {
+                    // IGNORE THE X VALUES OF THE LEFT JOYSTICK
                     motorFL.setPower(((gamepad1.right_stick_y) - (gamepad1.right_stick_x) + (gamepad1.left_stick_y)) * speed);
                     motorBL.setPower(-(-(gamepad1.right_stick_y) + (gamepad1.right_stick_x) - (gamepad1.left_stick_y)) * speed);
                     motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.right_stick_x) - (gamepad1.left_stick_y)) * speed);
                     motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.right_stick_x) + (gamepad1.left_stick_y)) * speed);
-                } else {
+                }
+                // IF THE LIFT IS NOT AT IT'S LIMIT OR BOTH OF THE JOYSTICKS DO NOT HAVE POSITIVE VALUES
+                else {
+                    // STANDARD DRIVE SYSTEM
                     motorFL.setPower(((gamepad1.right_stick_y) - (gamepad1.right_stick_x) + (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
                     motorBL.setPower(-(-(gamepad1.right_stick_y) + (gamepad1.right_stick_x) - (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
                     motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.right_stick_x) - (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
