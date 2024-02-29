@@ -191,7 +191,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
             // IF MODE IS 1
             case 1:
                 // IF THE LIFT IS AT IT'S LIMIT & BOTH JOYSTICKS HAVE POSITIVE Y VALUES
-                if (Lift.getCurrentPosition() == liftLimit && gamepad1.right_stick_y > 0 && gamepad1.left_stick_y > 0) {
+                if (Lift.getCurrentPosition() >= liftLimit && gamepad1.right_stick_y > 0 && gamepad1.left_stick_y > 0) {
                     // IGNORE THE Y VALUES OF BOTH JOYSTICKS
                     motorFL.setPower((-(gamepad1.right_stick_x) - (gamepad1.left_stick_x)) * speed);
                     motorBL.setPower(-((gamepad1.right_stick_x) - (gamepad1.left_stick_x)) * speed);
@@ -199,7 +199,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                     motorFR.setPower(-((gamepad1.right_stick_x) + (gamepad1.left_stick_x)) * speed);
                 }
                 // IF THE LIFT IS AT IT'S LIMIT & THE RIGHT JOYSTICK HAS A POSITIVE Y VALUE
-                else if (Lift.getCurrentPosition() == liftLimit && gamepad1.right_stick_y > 0) {
+                else if (Lift.getCurrentPosition() >= liftLimit && gamepad1.right_stick_y > 0) {
                     // IGNORE THE Y VALUES OF THE RIGHT JOYSTICK
                     motorFL.setPower((-(gamepad1.right_stick_x) + (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
                     motorBL.setPower(-((gamepad1.right_stick_x) - (gamepad1.left_stick_y) - (gamepad1.left_stick_x)) * speed);
@@ -207,7 +207,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                     motorFR.setPower(-((gamepad1.right_stick_x) + (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                 }
                 // IF THE LIFT IS AT IT'S LIMIT & THE LEFT JOYSTICK HAS A POSITIVE Y VALUE
-                else if (Lift.getCurrentPosition() == liftLimit && gamepad1.left_stick_y > 0) {
+                else if (Lift.getCurrentPosition() >= liftLimit && gamepad1.left_stick_y > 0) {
                     // IGNORE THE Y VALUES OF THE LEFT JOYSTICK
                     motorFL.setPower(((gamepad1.right_stick_y) - (gamepad1.right_stick_x) - (gamepad1.left_stick_x)) * speed);
                     motorBL.setPower(-(-(gamepad1.right_stick_y) + (gamepad1.right_stick_x) - (gamepad1.left_stick_x)) * speed);
