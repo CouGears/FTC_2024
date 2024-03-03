@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.JoshAuton.RobotMethods;
 
 @TeleOp
-public class TurnTest extends LinearOpMode {
+public class TurnTest0 extends LinearOpMode {
 
     public static DcMotor motorBR, motorBL, motorFL, motorFR;
 
