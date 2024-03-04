@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.JoshTeleOp;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -12,6 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @TeleOp
 public class TwoDriverTeleOp extends LinearOpMode {
@@ -28,6 +30,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
     public static Servo DropServo, AirplaneLaunch;
     // DISTANCE SENSOR (FRONT)
     public static DistanceSensor BackdropDistance;
+    // SAMPLE MECANUM DRIVE
+    public static SampleMecanumDrive drive;
     // VARIABLE FOR COLOR SENSOR SYSTEM
     private int pixel_color = 0;
     // LIFT LIMIT
@@ -92,10 +96,16 @@ public class TwoDriverTeleOp extends LinearOpMode {
         red3 = hardwareMap.get(DigitalChannel.class, "red3");
         green3 = hardwareMap.get(DigitalChannel.class, "green3");
         color = hardwareMap.get(ColorSensor.class, "Color");
-        color2 = hardwareMap.get(ColorSensor.class, "Color2");
+        //color2 = hardwareMap.get(ColorSensor.class, "Color2");
 
         // MAP DISTANCE SENSOR
         BackdropDistance = hardwareMap.get(DistanceSensor.class, "BackdropDistance");
+
+        // DEFINE SAMPLE MECANUM DRIVE
+        drive = new SampleMecanumDrive(hardwareMap);
+
+        // SET SAMPLE MECANUM DRIVE MODE
+        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // SET DC MOTOR ZERO POWER BEHAVIORS
@@ -153,11 +163,11 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 // MODE 0: REGULAR DRIVE SYSTEM
                 // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
                 // (cont.) TOUCHING THE BACKDROP
-                driveSystem(1);
+                driveSystem(2);
                 // CALL INTAKE STRING/PULLEY SYSTEM
                 intakeStringSystem();
                 // CALL MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
-                middleIntakePixelColorSystem();
+                //middleIntakePixelColorSystem();
                 // CALL LIFT SYSTEM
                 liftSystem();
                 // UPDATE TELEMETRY WITH UPDATED DATA
@@ -223,6 +233,17 @@ public class TwoDriverTeleOp extends LinearOpMode {
                     motorBR.setPower((-(gamepad1.right_stick_y) - (gamepad1.right_stick_x) - (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                     motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.right_stick_x) + (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                 }
+                break;
+            case 2:
+                drive.setWeightedDrivePower(
+                        new Pose2d(
+                                -gamepad1.left_stick_y,
+                                -gamepad1.left_stick_x,
+                                -gamepad1.right_stick_x
+                        )
+                );
+
+                drive.update();
         }
     }
     //// INTAKE SYSTEM
@@ -465,7 +486,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
             // ???
             dropDelay++;
             // IF ???
-            if (dropDelay >= 10){
+            if (dropDelay >= 2){
                 // MOVE THE BUCKET TO IT'S DROPPING POSITION
                 DropServo.setPosition(.5);
                 // ???
@@ -487,46 +508,46 @@ public class TwoDriverTeleOp extends LinearOpMode {
     /// NO KEYBINDS
     // NOT SURE EXACTLY HOW THIS WORKS - NOT GOING TO COMMENT IT
     // - JOSH
-    private void middleIntakePixelColorSystem() {
-        // color sensors 1- green 2-purple 3- yellow all- white (4)
-        if ((color.green()> 2000 && color.blue()> 2000)||(color2.green()> 2000 && color2.blue()> 2000)) {
-            pixel_color = 4;
-        } else if ((color.green()> 1000&& color.red()> 850 && color.blue() < 1000) || (color2.green()> 1000&& color2.red()> 850 && color2.blue() < 1000)) {
-            pixel_color = 3;
-        } else if ((color.green()> 1000 && color.blue()< 1000)||(color2.green()> 1000 && color2.blue()< 1000) ) {
-            pixel_color = 1;
-        } else if ((color.blue() > 1550 && color.red() < 1380) || (color2.blue() > 1550 && color2.red() < 1380)) {
-            pixel_color = 2;
-        }
-
-        else{ pixel_color = 0;}
-        switch (pixel_color){
-            case 1:
-                // telemetry.addLine("Reading: green");
-                telemetry.addData("Middle intake", "Green Pixel Loaded");
-                break;
-            case 2:
-                //telemetry.addLine("Reading: purple");
-                telemetry.addData("Middle intake", "Purple Pixel Loaded");
-
-                break;
-            case 3:
-                //telemetry.addLine("Reading: yellow");
-                telemetry.addData("Middle intake", "Yellow Pixel Loaded");
-
-                break;
-            case 4:
-                //telemetry.addLine("Reading: white");
-                telemetry.addData("Middle intake", "White Pixel Loaded");
-
-                break;
-            case 0:
-                telemetry.addData("Middle intake", "No Pixel Sensed");
-                // telemetry.addLine("Reading: No Pixel");
-                break;
-
-        }
-    }
+//    private void middleIntakePixelColorSystem() {
+//        // color sensors 1- green 2-purple 3- yellow all- white (4)
+//        if ((color.green()> 2000 && color.blue()> 2000)||(color2.green()> 2000 && color2.blue()> 2000)) {
+//            pixel_color = 4;
+//        } else if ((color.green()> 1000&& color.red()> 850 && color.blue() < 1000) || (color2.green()> 1000&& color2.red()> 850 && color2.blue() < 1000)) {
+//            pixel_color = 3;
+//        } else if ((color.green()> 1000 && color.blue()< 1000)||(color2.green()> 1000 && color2.blue()< 1000) ) {
+//            pixel_color = 1;
+//        } else if ((color.blue() > 1550 && color.red() < 1380) || (color2.blue() > 1550 && color2.red() < 1380)) {
+//            pixel_color = 2;
+//        }
+//
+//        else{ pixel_color = 0;}
+//        switch (pixel_color){
+//            case 1:
+//                // telemetry.addLine("Reading: green");
+//                telemetry.addData("Middle intake", "Green Pixel Loaded");
+//                break;
+//            case 2:
+//                //telemetry.addLine("Reading: purple");
+//                telemetry.addData("Middle intake", "Purple Pixel Loaded");
+//
+//                break;
+//            case 3:
+//                //telemetry.addLine("Reading: yellow");
+//                telemetry.addData("Middle intake", "Yellow Pixel Loaded");
+//
+//                break;
+//            case 4:
+//                //telemetry.addLine("Reading: white");
+//                telemetry.addData("Middle intake", "White Pixel Loaded");
+//
+//                break;
+//            case 0:
+//                telemetry.addData("Middle intake", "No Pixel Sensed");
+//                // telemetry.addLine("Reading: No Pixel");
+//                break;
+//
+//        }
+//    }
 
 }
 
