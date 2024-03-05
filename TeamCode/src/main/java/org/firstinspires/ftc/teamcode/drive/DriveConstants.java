@@ -34,7 +34,7 @@ public class DriveConstants {
      * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
      * from DriveVelocityPIDTuner.
      */
-    public static final boolean RUN_USING_ENCODER = true;
+    public static final boolean RUN_USING_ENCODER = false;
     public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
             getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
@@ -46,7 +46,7 @@ public class DriveConstants {
      * angular distances although most angular parameters are wrapped in Math.toRadians() for
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
-    public static double WHEEL_RADIUS = 1.9685; // in
+    public static double WHEEL_RADIUS = 1.8898; // in
     public static double GEAR_RATIO = 0.7206; // output (wheel) speed / input (motor) speed
     public static double TRACK_WIDTH = 18.1; // in
 
@@ -56,9 +56,9 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 1.0 / rpmToVelocity(MAX_RPM);
-    public static double kA = 0;
-    public static double kStatic = 0;
+    public static double kV = 0.02109;
+    public static double kA = 0.00013;
+    public static double kStatic = 0.13126;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -88,8 +88,8 @@ public class DriveConstants {
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
      */
-    public static double MAX_VEL = 76.22057483314033;
-    public static double MAX_ACCEL = 76.22057483314033;
+    public static double MAX_VEL = 50.488;
+    public static double MAX_ACCEL = 50.488;
     public static double MAX_ANG_VEL = Math.toRadians(321.1115625);
     public static double MAX_ANG_ACCEL = Math.toRadians(321.1115625);
 

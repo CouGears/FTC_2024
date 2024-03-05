@@ -35,7 +35,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // VARIABLE FOR COLOR SENSOR SYSTEM
     private int pixel_color = 0;
     // LIFT LIMIT
-    private int liftLimit = 3000;
+    private int liftLimit = 800;
     // VARIABLE FOR PULLUP SYSTEMS A & B
     private boolean pullup = false;
     // NOT SURE WHAT THIS DOES
@@ -125,7 +125,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         motorBR.setDirection(DcMotorSimple.Direction.FORWARD);
         BackIntake.setDirection(DcMotorSimple.Direction.REVERSE);
         MiddleIntake.setDirection(DcMotorSimple.Direction.REVERSE);
-        Lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        Lift.setDirection(DcMotorSimple.Direction.REVERSE);
         PullUp.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // RESET LIFT MOTOR ENCODER
@@ -163,7 +163,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 // MODE 0: REGULAR DRIVE SYSTEM
                 // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
                 // (cont.) TOUCHING THE BACKDROP
-                driveSystem(2);
+                driveSystem(0);
                 // CALL INTAKE STRING/PULLEY SYSTEM
                 intakeStringSystem();
                 // CALL MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
@@ -326,15 +326,15 @@ public class TwoDriverTeleOp extends LinearOpMode {
         double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
         // INITIALIZE AND DEFINE THE AMOUNT OF MOTOR ENCODER UNITS (1620 RPM DC MOTOR)
         // FOR 1 INCH OF LINEAR SLIDE MOVEMENT
-        final int liftEncoderPerInch = 81;
+        final int liftEncoderPerInch = 30;
         // INITIALIZE AND DEFINE VARIABLE FOR THE LIFT LIMIT IN MOTOR ENCODER UNITS
         // (1620 RPM DC MOTOR)
         int liftLimit = (int) (liftEncoderPerInch * liftLimitInches);
         // IF THE CALCULATED LIFT LIMIT IS MORE THAN THE ULTIMATE MAXIMUM LIFT LIMIT
         // (FULLY EXTENDED LINEAR SLIDE)
-        if (liftLimit > 3000) {
+        if (liftLimit > 800) {
             // SET THE LIFT LIMIT TO THE ULTIMATE MAXIMUM LIFT LIMIT (FULLY EXTENDED LINEAR SLIDE)
-            liftLimit = 3000;
+            liftLimit = 800;
         }
 
         // IF CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LIMIT
