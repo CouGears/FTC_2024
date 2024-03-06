@@ -118,7 +118,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         PullUp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // SET DC MOTOR DIRECTIONS
+        // SET DC MOTOR DIRECTION
         motorFL.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBL.setDirection(DcMotorSimple.Direction.FORWARD);
         motorFR.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -259,13 +259,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
         if (gamepad1.y || (gamepad1.right_bumper && gamepad1.left_bumper)) {
             // RUN BOTH INTAKES
             BackIntake.setPower(1);
-            MiddleIntake.setPower(-1);
+            MiddleIntake.setPower(-.66);
         }
         // IF CONTROLLER 1'S X BUTTON IS PRESSED OR BOTH OF CONTROLLER 1'S TRIGGERS ARE PRESSED
         else if (gamepad1.x || ((gamepad1.right_trigger > 0) && (gamepad1.left_trigger > 0))) {
             // RUN BOTH INTAKES IN REVERSE
             BackIntake.setPower(-1);
-            MiddleIntake.setPower(1);
+            MiddleIntake.setPower(.66);
         }
         // IF CONTROLLER 1'S RIGHT BUMPER IS PRESSED
         else if (gamepad1.right_bumper) {
@@ -276,7 +276,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // IF CONTROLLER 1'S LEFT BUMPER IS PRESSED
         else if (gamepad1.left_bumper) {
             // RUN MIDDLE INTAKE ONLY
-            MiddleIntake.setPower(-1);
+            MiddleIntake.setPower(-.66);
             BackIntake.setPower(0);
         }
         // IF CONTROLLER 1'S RIGHT TRIGGER IS PRESSED
@@ -288,7 +288,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // IF CONTROLLER 1'S LEFT TRIGGER IS PRESSED
         else if (gamepad1.left_trigger > 0) {
             // RUN MIDDLE INTAKE ONLY IN REVERSE
-            MiddleIntake.setPower(1);
+            MiddleIntake.setPower(.66);
             BackIntake.setPower(0);
         }
         // IF CONTROLLER 1'S X BUTTON, Y BUTTON, LEFT TRIGGER, RIGHT TRIGGER, LEFT BUMPER, AND RIGHT
