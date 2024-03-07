@@ -6,7 +6,7 @@ import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class BlueBackdropMiddle1 {
+public class Auton1_Middle {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(750);
 
@@ -16,18 +16,11 @@ public class BlueBackdropMiddle1 {
                 .setConstraints(43.857278219984295, 43.857278219984295, 4.64, 4.64, 0.425)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
-                                .splineToLinearHeading(new Pose2d(24, 24, Math.toRadians(-90)), Math.toRadians(-90))
-                                .splineToLinearHeading(new Pose2d(12, 24, Math.toRadians(-90)), Math.toRadians(0))
+                                .splineToSplineHeading(new Pose2d(12, 31, Math.toRadians(270)), Math.toRadians(180))
                                 .setReversed(true)
-                                .back(24)
-                                .setReversed(false)
-                                .splineToLinearHeading(new Pose2d(48, 36, Math.toRadians(0)), Math.toRadians(0))
-                                .back(108)
-                                .forward(108)
-                                .back(108)
-                                .forward(108)
+                                .lineToSplineHeading(new Pose2d(50, 36, Math.toRadians(0)))
                                 .strafeLeft(24)
-                                .forward(12)
+                                .forward(10)
                                 .build()
                 );
 

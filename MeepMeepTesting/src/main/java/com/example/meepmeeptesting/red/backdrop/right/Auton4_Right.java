@@ -1,12 +1,14 @@
-package com.example.meepmeeptesting.blue.wing.middle;
+package com.example.meepmeeptesting.red.backdrop.right;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
+import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class RedBackdropMiddle1 {
+public class Auton4_Right {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(750);
 
@@ -15,19 +17,17 @@ public class RedBackdropMiddle1 {
                 .setColorScheme(new ColorSchemeRedDark())
                 .setConstraints(43.857278219984295, 43.857278219984295, 4.64, 4.64, 0.425)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(12, -64.5, 0))
-                                .splineToLinearHeading(new Pose2d(24, -24, Math.toRadians(-90)), Math.toRadians(-90))
-                                .splineToLinearHeading(new Pose2d(12, -24, Math.toRadians(-90)), Math.toRadians(0))
+                        drive.trajectorySequenceBuilder(new Pose2d(12, -64.5, Math.toRadians(180)))
+                                .lineToSplineHeading(new Pose2d(50, -30, Math.toRadians(0)))
+                                .lineToSplineHeading(new Pose2d(31, -36, Math.toRadians(180)))
                                 .setReversed(true)
-                                .back(24)
+                                .back(8)
+                                .splineToSplineHeading(new Pose2d(12, -60, Math.toRadians(0)), Math.toRadians(180))
+                                .back(48)
+                                .splineToConstantHeading(new Vector2d(-56, -36), Math.toRadians(180))
                                 .setReversed(false)
-                                .splineToLinearHeading(new Pose2d(48, -36, Math.toRadians(0)), Math.toRadians(0))
-                                .back(108)
-                                .forward(108)
-                                .back(108)
-                                .forward(108)
-                                .strafeRight(24)
-                                .forward(12)
+                                .splineToConstantHeading(new Vector2d(-36, -60), Math.toRadians(0))
+                                .forward(96)
                                 .build()
                 );
 
