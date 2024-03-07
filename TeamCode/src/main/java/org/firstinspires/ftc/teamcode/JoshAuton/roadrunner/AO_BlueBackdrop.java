@@ -56,6 +56,32 @@ public class AO_BlueBackdrop extends OpMode {
             .forward(120)
             .build();
 
+    TrajectorySequence middle1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+            .splineToLinearHeading(new Pose2d(24, 24, Math.toRadians(-90)), Math.toRadians(-90))
+            .splineToLinearHeading(new Pose2d(12, 24, Math.toRadians(-90)), Math.toRadians(0))
+            .setReversed(true)
+            .back(24)
+            .setReversed(false)
+            .splineToLinearHeading(new Pose2d(48, 36, Math.toRadians(0)), Math.toRadians(0))
+            .back(108)
+            .forward(108)
+            .back(108)
+            .forward(108)
+            .strafeLeft(24)
+            .forward(12)
+            .build();
+
+    TrajectorySequence right1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+            .splineToLinearHeading(new Pose2d(36, 48, Math.toRadians(270)), Math.toRadians(0))
+            .splineToLinearHeading(new Pose2d(0, 36, Math.toRadians(180)), Math.toRadians(0))
+            .setReversed(true)
+            .splineToLinearHeading(new Pose2d(24, 60, Math.toRadians(0)), Math.toRadians(0))
+            .setReversed(false)
+            .lineToConstantHeading(new Vector2d(48, 30))
+            .strafeLeft(30)
+            .forward(12)
+            .build();
+
     @Override
     public void init() {
         robot.init(hardwareMap, telemetry);
@@ -80,98 +106,10 @@ public class AO_BlueBackdrop extends OpMode {
                 drive.followTrajectorySequence(left1);
                 break;
             case "middle":
-                // drive to prop
-                robot.drive(0, 21, 1);
-                robot.returnAfterBusy();
-                robot.turn(90, 1);
-                robot.returnAfterBusy();
-                robot.drive(14, 0, 1);
-                robot.returnAfterBusy();
-                // move lift out of the day
-                robot.moveLift(1000, 1, telemetry);
-                // drop pixel
-                robot.middle(.5);
-                sleep(1000);
-                robot.middle(0);
-                // back up
-                robot.drive(-9, 0, 1);
-                robot.returnAfterBusy();
-                // Turn and move to backdrop
-                robot.turn(-90, 1);
-                robot.returnAfterBusy();
-                robot.drive(31, 0, 1);
-                robot.returnAfterBusy();
-                // drive towards backdrop at 20% speed
-                robot.drive(20, 0, 0.2);
-                dist = robot.getBackdropDistance();
-                // wait until robot is less than 3.5 inches from the backdrop
-                while (dist > 3.5) {
-                    dist = robot.getBackdropDistance();
-                }
-
-                // stop the wheels
-                robot.stopWheels();
-                robot.drive(.5, 0, 1); //Mv to spike mark
-                robot.returnAfterBusy();
-                // drop the pixel
-                robot.setDropServo(.5);
-                sleep(500);
-                // park
-                robot.drive(-4, 0, 0.5);
-                robot.returnAfterBusy();
-                robot.setDropServo(0.045);
-                robot.moveLift(-1000, 1, telemetry);
-                robot.drive(0, -24, 1);
-                robot.returnAfterBusy();
-                robot.drive(14, 0, 1);
-                robot.returnAfterBusy();
+                drive.followTrajectorySequence(middle1);
                 break;
             case "right":
-                robot.drive(0, 29, 1);
-                robot.returnAfterBusy();
-                robot.turn(180, 1);
-                robot.returnAfterBusy();
-                robot.drive(7, 0, 1);
-                robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry);
-                robot.returnAfterBusy();
-                robot.middle(0.5);
-                sleep(1000);
-                robot.middle(0);
-                robot.drive(-15, 0, 1);
-                robot.returnAfterBusy();
-                robot.turn(180, 1);
-                robot.returnAfterBusy();
-                robot.drive(0, 0, 1);
-                robot.returnAfterBusy();
-                robot.drive(26, 0, 1);
-                robot.returnAfterBusy();
-                robot.drive(0, -12, 1);
-                robot.returnAfterBusy();
-
-                robot.drive(20, 0, 0.2);
-                dist = robot.getBackdropDistance();
-                // wait until robot is less than 3.5 inches from the backdrop
-                while (dist > 3.5) {
-                    dist = robot.getBackdropDistance();
-                }
-
-                // stop the wheels
-                robot.stopWheels();
-                robot.drive(.5, 0, 1); //Mv to spike mark
-                robot.returnAfterBusy();
-                // drop the pixel
-                robot.setDropServo(.5);
-                sleep(1000);
-                // park
-                robot.drive(-4, 0, 0.5);
-                robot.returnAfterBusy();
-                robot.setDropServo(0.045);
-                robot.moveLift(-1000, 1, telemetry);
-                robot.drive(0, -18, 1);
-                robot.returnAfterBusy();
-                robot.drive(14, 0, 1);
-                robot.returnAfterBusy();
+                drive.followTrajectorySequence(right1);
                 break;
         }
     }

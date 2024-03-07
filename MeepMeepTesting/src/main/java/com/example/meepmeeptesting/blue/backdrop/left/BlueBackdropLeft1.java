@@ -1,4 +1,4 @@
-package com.example.meepmeeptesting;
+package com.example.meepmeeptesting.blue.backdrop.left;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -7,7 +7,7 @@ import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class BlueBackdropLeft {
+public class BlueBackdropLeft1 {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(750);
 
@@ -22,15 +22,19 @@ public class BlueBackdropLeft {
                                 .splineToLinearHeading(new Pose2d(18, 56, Math.toRadians(-90)), Math.toRadians(0))
                                 .setReversed(false)
                                 .splineToLinearHeading(new Pose2d(48, 40, Math.toRadians(0)), Math.toRadians(-90))
-                                .strafeRight(12)
+                                .strafeRight(36)
                                 .setReversed(true)
-                                .splineToLinearHeading(new Pose2d(24, -12, Math.toRadians(270)), Math.toRadians(90))
-                                .strafeRight(12)
-                                .lineToLinearHeading(new Pose2d(12, 36, Math.toRadians(0)))
+                                //.splineToLinearHeading(new Pose2d(24, -12, Math.toRadians(270)), Math.toRadians(90))
+                                .splineToLinearHeading(new Pose2d(-60, 12, Math.toRadians(0)), Math.toRadians(180))
                                 .setReversed(false)
-                                .back(72)
-                                .lineToConstantHeading(new Vector2d(-36, 60))
+                                .splineToConstantHeading(new Vector2d(-36, 60), Math.toRadians(90))
                                 .forward(96)
+//                                .strafeRight(12)
+//                                .lineToLinearHeading(new Pose2d(12, 36, Math.toRadians(0)))
+//                                .setReversed(false)
+//                                .back(72)
+//                                .lineToConstantHeading(new Vector2d(-36, 60))
+//                                .forward(96)
                                 .build()
                 );
 

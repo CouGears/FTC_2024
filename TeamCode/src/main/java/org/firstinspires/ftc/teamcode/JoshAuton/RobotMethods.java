@@ -231,17 +231,12 @@ public class RobotMethods {
 
     public void moveLift(int target, double pwr, Telemetry tele) {
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while (Math.abs(target-getLift()) > 10) {
-            if (target > getLift()) {
-                Lift.setPower(-pwr);
-            } else if (target < getLift()) {
-                Lift.setPower(pwr);
-            }
-            tele.addLine("Lift: " + getLift());
-            tele.update();
-        }
-        Lift.setPower(0);
+
+        Lift.setTargetPosition(-target);
+
+        Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        Lift.setPower(pwr);
     }
 
     public void middle(double power) {
@@ -260,5 +255,8 @@ public class RobotMethods {
         return BackdropDistance.getDistance(DistanceUnit.INCH);
     }
 
+    public void setIntakeString(double pwr) {
+        IntakeString.setPower(pwr);
+    }
 
 }

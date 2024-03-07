@@ -63,7 +63,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         telemetry.addData("Bucket Position", bucketstate);
         telemetry.addData("Lift Position", Lift.getCurrentPosition());
         telemetry.addData("Drone State", dronestate);
-        telemetry.addData("Pullup Position", PullUp.getCurrentPosition());
+        //telemetry.addData("Pullup Position", PullUp.getCurrentPosition());
         telemetry.addData("Pullup State", pullupstate);
         // UPDATE TELEMETRY ON DRIVER STATION
         telemetry.update();
@@ -102,10 +102,10 @@ public class TwoDriverTeleOp extends LinearOpMode {
         BackdropDistance = hardwareMap.get(DistanceSensor.class, "BackdropDistance");
 
         // DEFINE SAMPLE MECANUM DRIVE
-        drive = new SampleMecanumDrive(hardwareMap);
+        //drive = new SampleMecanumDrive(hardwareMap);
 
         // SET SAMPLE MECANUM DRIVE MODE
-        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // SET DC MOTOR ZERO POWER BEHAVIORS
@@ -234,16 +234,16 @@ public class TwoDriverTeleOp extends LinearOpMode {
                     motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.right_stick_x) + (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                 }
                 break;
-            case 2:
-                drive.setWeightedDrivePower(
-                        new Pose2d(
-                                -gamepad1.left_stick_y,
-                                -gamepad1.left_stick_x,
-                                -gamepad1.right_stick_x
-                        )
-                );
-
-                drive.update();
+//            case 2:
+//                drive.setWeightedDrivePower(
+//                        new Pose2d(
+//                                -gamepad1.left_stick_y,
+//                                -gamepad1.left_stick_x,
+//                                -gamepad1.right_stick_x
+//                        )
+//                );
+//
+//                drive.update();
         }
     }
     //// INTAKE SYSTEM
