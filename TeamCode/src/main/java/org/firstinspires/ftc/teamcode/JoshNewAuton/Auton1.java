@@ -118,36 +118,39 @@ public class Auton1 extends OpMode {
         double dist;
         switch (pos) {
             case "left":
+                // drive to spike mark
                 drive.followTrajectorySequence(left1);
-
+                // spit pixel
                 base.spitPixel();
-
+                // drive to backdrop
                 drive.followTrajectorySequence(left2);
-
+                // place pixel
                 base.placePixel();
-
+                // park
                 drive.followTrajectorySequence(left3);
                 break;
             case "middle":
+                // drive to spike mark
                 drive.followTrajectorySequence(middle1);
-
+                // spit pixel
                 base.spitPixel();
-
+                // drive to backdrop
                 drive.followTrajectorySequence(middle2);
-
+                // place pixel
                 base.placePixel();
-
+                // park
                 drive.followTrajectorySequence(middle3);
                 break;
             case "right":
+                // drive to spike mark
                 drive.followTrajectorySequence(right1);
-
+                // spit pixel
                 base.spitPixel();
-
+                // drive to backdrop
                 drive.followTrajectorySequence(right2);
-
+                // place pixel
                 base.placePixel();
-                
+                // park
                 drive.followTrajectorySequence(right3);
                 break;
         }
