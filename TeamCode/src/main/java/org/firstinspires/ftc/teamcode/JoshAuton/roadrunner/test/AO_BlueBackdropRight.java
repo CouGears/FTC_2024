@@ -5,6 +5,7 @@ import android.util.Size;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.robot.Robot;
 
@@ -20,12 +21,15 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Autonomous
+@Disabled
 public class AO_BlueBackdropRight extends OpMode {
 
     SampleMecanumDrive drive;
     TrajectorySequence traj1;
     TrajectorySequence traj2;
     TrajectorySequence traj3;
+
+    TrajectorySequence traj4;
     RobotMethods robot = new RobotMethods();
     Pose2d startPose = new Pose2d(12, 64.5, Math.toRadians(0));
 
@@ -53,6 +57,13 @@ public class AO_BlueBackdropRight extends OpMode {
                 .back(48)
                 .splineToConstantHeading(new Vector2d(-57, 36), Math.toRadians(180))
                 .build();
+
+        traj4 = drive.trajectorySequenceBuilder(traj3.end())
+                .setReversed(false)
+                .splineToConstantHeading(new Vector2d(-36, 60), Math.toRadians(0))
+                .forward(96)
+                .build();
+
     }
 
     @Override
@@ -92,6 +103,8 @@ public class AO_BlueBackdropRight extends OpMode {
         robot.setIntakeString(0);
         sleep(500);
         robot.backIntake(0);
+
+        drive.followTrajectorySequence(traj4);
 
     }
 

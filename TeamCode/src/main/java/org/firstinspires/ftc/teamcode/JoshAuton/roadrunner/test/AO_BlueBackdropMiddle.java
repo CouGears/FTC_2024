@@ -5,6 +5,7 @@ import android.util.Size;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Autonomous
+@Disabled
 public class AO_BlueBackdropMiddle extends OpMode {
 
     SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);

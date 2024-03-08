@@ -125,7 +125,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         motorBR.setDirection(DcMotorSimple.Direction.FORWARD);
         BackIntake.setDirection(DcMotorSimple.Direction.REVERSE);
         MiddleIntake.setDirection(DcMotorSimple.Direction.REVERSE);
-        Lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        Lift.setDirection(DcMotorSimple.Direction.FORWARD);
         PullUp.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // RESET LIFT MOTOR ENCODER
@@ -158,7 +158,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 // CALL INTAKE SYSTEM FUNCTION
                 intakeSystem();
                 // CALL PULLUP SYSTEM A FUNCTION
-                pullupSystemA();;
+                pullupSystemA();
                 // CALL DRIVE SYSTEM FUNCTION MODE 1
                 // MODE 0: REGULAR DRIVE SYSTEM
                 // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
@@ -259,13 +259,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
         if (gamepad1.y || (gamepad1.right_bumper && gamepad1.left_bumper)) {
             // RUN BOTH INTAKES
             BackIntake.setPower(1);
-            MiddleIntake.setPower(-.66);
+            MiddleIntake.setPower(-1);
         }
         // IF CONTROLLER 1'S X BUTTON IS PRESSED OR BOTH OF CONTROLLER 1'S TRIGGERS ARE PRESSED
         else if (gamepad1.x || ((gamepad1.right_trigger > 0) && (gamepad1.left_trigger > 0))) {
             // RUN BOTH INTAKES IN REVERSE
             BackIntake.setPower(-1);
-            MiddleIntake.setPower(.66);
+            MiddleIntake.setPower(1);
         }
         // IF CONTROLLER 1'S RIGHT BUMPER IS PRESSED
         else if (gamepad1.right_bumper) {
@@ -276,7 +276,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // IF CONTROLLER 1'S LEFT BUMPER IS PRESSED
         else if (gamepad1.left_bumper) {
             // RUN MIDDLE INTAKE ONLY
-            MiddleIntake.setPower(-.66);
+            MiddleIntake.setPower(-1);
             BackIntake.setPower(0);
         }
         // IF CONTROLLER 1'S RIGHT TRIGGER IS PRESSED
@@ -288,7 +288,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // IF CONTROLLER 1'S LEFT TRIGGER IS PRESSED
         else if (gamepad1.left_trigger > 0) {
             // RUN MIDDLE INTAKE ONLY IN REVERSE
-            MiddleIntake.setPower(.66);
+            MiddleIntake.setPower(1);
             BackIntake.setPower(0);
         }
         // IF CONTROLLER 1'S X BUTTON, Y BUTTON, LEFT TRIGGER, RIGHT TRIGGER, LEFT BUMPER, AND RIGHT
@@ -307,7 +307,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
     // D-PAD RIGHT: OVERRIDE LIFT LIMIT
     private void liftSystem() {
         // INITIALIZE AND DEFINE VARIABLE FOR ROBOT'S DISTANCE FROM BACKDROP IN INCHES
-        double distanceFromBackdrop = BackdropDistance.getDistance(DistanceUnit.INCH);
+        //double distanceFromBackdrop = BackdropDistance.getDistance(DistanceUnit.INCH);
 
         // INITIALIZE AND DEFINE VARIABLE FOR 120 DEGREES IN RADIANS
         final double radian120 = 120 * (3.14/180);
@@ -323,7 +323,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // THE SINE OF 120 DEGREES
         // THE SINE OF 15 DEGREES
         // AN ADJUSTMENT CONSTANT
-        double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
+        //double liftLimitInches = distanceFromBackdrop * (sin120 / sin15) - 4.72;
+        double liftLimitInches = 999;
         // INITIALIZE AND DEFINE THE AMOUNT OF MOTOR ENCODER UNITS (1620 RPM DC MOTOR)
         // FOR 1 INCH OF LINEAR SLIDE MOVEMENT
         final int liftEncoderPerInch = 30;

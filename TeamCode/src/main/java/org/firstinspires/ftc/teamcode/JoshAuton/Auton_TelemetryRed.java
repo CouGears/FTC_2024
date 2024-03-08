@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.JoshAuton;
 import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Autonomous
+@Disabled
 public class Auton_TelemetryRed extends OpMode {
 
     // initialize new instance of robot

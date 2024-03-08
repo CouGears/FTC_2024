@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -39,6 +40,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 //This auton is for Red Board Side
 
 @Autonomous
+@Disabled
 public class FrontRightAuton extends OpMode {
 
     //TensorFlowVision vision = new TensorFlowVision();

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 //TODO: Uncomment the following line to use
 @TeleOp
+@Disabled
 public class ZellMotor extends LinearOpMode {
 
     public static DcMotor motorZell;

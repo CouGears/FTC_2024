@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -15,6 +16,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @TeleOp(name="ColorAnalysisTeleOp", group="TeleOp")
+@Disabled
 public class ColorAnalysisTeleOp extends LinearOpMode {
 
     OpenCvCamera webcam;

@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.JoshAuton;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 @Autonomous
+@Disabled
 public class MethodsTest extends OpMode {
 
     RobotMethods robot = new RobotMethods();
