@@ -36,7 +36,7 @@ public class LiftTesting extends OpMode {
 
     @Override
     public void start() {
-        robot.moveLift(400, 1, telemetry);
+        robot.moveLift(400, 1);
     }
 
     @Override

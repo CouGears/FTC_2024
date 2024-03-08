@@ -229,7 +229,7 @@ public class RobotMethods {
         return DropServo.getPosition();
     }
 
-    public void moveLift(int target, double pwr, Telemetry tele) {
+    public void moveLift(int target, double pwr) {
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         Lift.setTargetPosition(-target);

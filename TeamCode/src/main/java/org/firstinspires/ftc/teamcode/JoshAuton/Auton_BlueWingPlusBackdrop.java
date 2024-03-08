@@ -57,14 +57,14 @@ public class Auton_BlueWingPlusBackdrop extends OpMode {
                 robot.drive(6, 0, 1);
                 robot.returnAfterBusy();
                 // move lift out of the way
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 robot.returnAfterBusy();
                 // drop pixel
                 robot.middle(0.5);
                 sleep(1000);
                 robot.middle(0);
                 // move lift back down
-                robot.moveLift(-1000, 1, telemetry);
+                robot.moveLift(-1000, 1);
                 // drive towards backdrop (thru trusses)
                 robot.drive(-12, 0, 1);
                 robot.returnAfterBusy();
@@ -73,7 +73,7 @@ public class Auton_BlueWingPlusBackdrop extends OpMode {
                 robot.drive(84, 0, 1);
                 robot.returnAfterBusy();
                 // move lift up
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 // drive towards left drop pos
                 robot.drive(0, -32, 1);
                 robot.returnAfterBusy();
@@ -101,14 +101,14 @@ public class Auton_BlueWingPlusBackdrop extends OpMode {
                 robot.turn(90, 1);
                 robot.returnAfterBusy();
                 // move the lift out of the way
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 robot.returnAfterBusy();
                 // drop pixel
                 robot.middle(1);
                 sleep(1000);
                 robot.middle(0);
                 // move the lift down
-                robot.moveLift(-1000, 1, telemetry);
+                robot.moveLift(-1000, 1);
                 // drive towards backdrop (thru trusses)
                 robot.drive(-4, 0, 1);
                 robot.returnAfterBusy();
@@ -117,7 +117,7 @@ public class Auton_BlueWingPlusBackdrop extends OpMode {
                 robot.drive(76, 0, 1);
                 robot.returnAfterBusy();
                 // move the lift up
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 // drive towards middle drop pos
                 robot.drive(0, 4, 1);
                 robot.returnAfterBusy();
@@ -147,19 +147,19 @@ public class Auton_BlueWingPlusBackdrop extends OpMode {
                 robot.drive(6, 0, 1);
                 robot.returnAfterBusy();
                 // move lift out of the way
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 robot.returnAfterBusy();
                 // drop prop
                 robot.middle(0.5);
                 sleep(1000);
                 // move lift down
-                robot.moveLift(-1000, 0, telemetry);
+                robot.moveLift(-1000, 0);
                 robot.middle(0);
                 // drive towards backdrop
                 robot.drive(-76, 0, 1);
                 robot.returnAfterBusy();
                 // move lift up
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 // drive towards backdrop
                 robot.turn(180, 1);
                 robot.returnAfterBusy();

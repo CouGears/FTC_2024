@@ -1,7 +1,11 @@
-package org.firstinspires.ftc.teamcode.JoshAuton.roadrunner;
+package org.firstinspires.ftc.teamcode.JoshNewAuton;
 
 import android.util.Size;
 
+import com.acmerobotics.roadrunner.drive.MecanumDrive;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -10,17 +14,20 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDir
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.JoshAuton.RobotMethods;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
 @Autonomous
-@Disabled
-public class AO_BlueWing extends OpMode {
+public class Auton1 extends OpMode {
 
     // initialize new instance of robot
     RobotMethods robot = new RobotMethods();
+
+    BaseMethods base = new BaseMethods(telemetry, robot);
 
     // tfod
     private static final boolean USE_WEBCAM = true;
@@ -30,11 +37,66 @@ public class AO_BlueWing extends OpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
 
+
     private String pos = "right";
 
+    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+
+    //trajectory
+
+    //// LEFT TRAJECTORIES
+    /// LEFT TRAJECTORY 1
+    TrajectorySequence left1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+            // DRIVE TO SPIKE MARK
+            .splineToSplineHeading(new Pose2d(31, 30, Math.toRadians(180)), Math.toRadians(180))
+            .build();
+    TrajectorySequence left2 = drive.trajectorySequenceBuilder(left1.end())
+            // REVERSE
+            .setReversed(true)
+            // DRIVE TO BACKDROP
+            .lineToSplineHeading(new Pose2d(50, 42, Math.toRadians(0)))
+            .build();
+    TrajectorySequence left3 = drive.trajectorySequenceBuilder(left2.end())
+            // PARK ON LEFT
+            .strafeLeft(18)
+            .forward(10)
+            .build();
+
+    TrajectorySequence middle1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+            // DRIVE TO SPIKE MARK
+            .splineToSplineHeading(new Pose2d(12, 31, Math.toRadians(270)), Math.toRadians(180))
+            .build();
+    TrajectorySequence middle2 = drive.trajectorySequenceBuilder(middle1.end())
+            // REVERSE
+            .setReversed(true)
+            // DRIVE TO BACKDROP
+            .lineToSplineHeading(new Pose2d(50, 36, Math.toRadians(0)))
+            .build();
+    TrajectorySequence middle3 = drive.trajectorySequenceBuilder(middle2.end())
+            // PARK IN CENTER
+            .strafeLeft(24)
+            .forward(10)
+            .build();
+
+    TrajectorySequence right1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+            // DRIVE TO SPIKE MARK
+            .splineToSplineHeading(new Pose2d(7, 36, Math.toRadians(180)), Math.toRadians(180))
+            .build();
+    TrajectorySequence right2 = drive.trajectorySequenceBuilder(right1.end())
+            // REVERSE
+            .setReversed(true)
+            .lineToSplineHeading(new Pose2d(50, 30, Math.toRadians(0)))
+            .build();
+    TrajectorySequence right3 = drive.trajectorySequenceBuilder(right2.end())
+            // PARK ON RIGHT
+            .strafeLeft(30)
+            .forward(10)
+            .build();
     @Override
     public void init() {
         robot.init(hardwareMap, telemetry);
+
 
         initTfod();
 
@@ -45,6 +107,9 @@ public class AO_BlueWing extends OpMode {
             sleep(10);
             i++;
         }
+
+        Pose2d startPose = new Pose2d(12, 64.5, 0);
+        drive.setPoseEstimate(startPose);
     }
 
     @Override
@@ -53,52 +118,70 @@ public class AO_BlueWing extends OpMode {
         double dist;
         switch (pos) {
             case "left":
-                robot.drive(0, 29, 1);
-                robot.returnAfterBusy();
-                //robot.turn(180, 1);
-                //robot.returnAfterBusy();
-                robot.drive(7, 0, 1);
-                robot.returnAfterBusy();
-                robot.moveLift(1000, 1);
-                robot.returnAfterBusy();
+                drive.followTrajectorySequence(left1);
+
+                robot.moveLift(400, 1);
+                sleep(500);
+                robot.setDropServo(0.5);
+                sleep(500);
+                robot.setDropServo(0.045);
+                sleep(200);
+                robot.moveLift(-400, 1);
+
+                drive.followTrajectorySequence(left2);
+
+                robot.moveLift(400, 1);
+                sleep(500);
                 robot.middle(0.5);
-                sleep(1000);
+                sleep(500);
                 robot.middle(0);
-                robot.drive(-7, 0, 1);
-                robot.returnAfterBusy();
+                robot.moveLift(-400, 1);
+
+                drive.followTrajectorySequence(left3);
                 break;
             case "middle":
-                // drive to prop
-                robot.drive(0, 21, 1);
-                robot.returnAfterBusy();
-                robot.turn(90, 1);
-                robot.returnAfterBusy();
-                robot.drive(14, 0, 1);
-                robot.returnAfterBusy();
-                // move lift out of the day
-                robot.moveLift(1000, 1);
-                // drop pixel
-                robot.middle(.5);
-                sleep(1000);
+                drive.followTrajectorySequence(middle1);
+
+                robot.moveLift(400, 1);
+                sleep(500);
+                robot.setDropServo(0.5);
+                sleep(500);
+                robot.setDropServo(0.045);
+                sleep(200);
+                robot.moveLift(-400, 1);
+
+                drive.followTrajectorySequence(middle2);
+
+                robot.moveLift(400, 1);
+                sleep(500);
+                robot.middle(0.5);
+                sleep(500);
                 robot.middle(0);
-                // back up
-                robot.drive(-9, 0, 1);
-                robot.returnAfterBusy();
+                robot.moveLift(-400, 1);
+
+                drive.followTrajectorySequence(middle3);
                 break;
             case "right":
-                robot.drive(0, 29, 1);
-                robot.returnAfterBusy();
-                robot.turn(180, 1);
-                robot.returnAfterBusy();
-                robot.drive(7, 0, 1);
-                robot.returnAfterBusy();
-                robot.moveLift(1000, 1);
-                robot.returnAfterBusy();
+                drive.followTrajectorySequence(right1);
+
+                robot.moveLift(400, 1);
+                sleep(500);
+                robot.setDropServo(0.5);
+                sleep(500);
+                robot.setDropServo(0.045);
+                sleep(200);
+                robot.moveLift(-400, 1);
+
+                drive.followTrajectorySequence(right2);
+
+                robot.moveLift(400, 1);
+                sleep(500);
                 robot.middle(0.5);
-                sleep(1000);
+                sleep(500);
                 robot.middle(0);
-                robot.drive(-15, 0, 1);
-                robot.returnAfterBusy();
+                robot.moveLift(-400, 1);
+                
+                drive.followTrajectorySequence(right3);
                 break;
         }
     }

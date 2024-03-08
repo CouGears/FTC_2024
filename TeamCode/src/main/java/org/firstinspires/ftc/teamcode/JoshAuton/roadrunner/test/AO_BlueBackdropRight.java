@@ -72,22 +72,22 @@ public class AO_BlueBackdropRight extends OpMode {
 
         drive.followTrajectorySequence(traj1);
 
-        robot.moveLift(400, 1, telemetry);
+        robot.moveLift(400, 1);
         sleep(500);
         robot.setDropServo(0.5);
         sleep(500);
         robot.setDropServo(0.045);
         sleep(200);
-        robot.moveLift(-400, 1, telemetry);
+        robot.moveLift(-400, 1);
 
         drive.followTrajectorySequence(traj2);
 
-        robot.moveLift(400, 1, telemetry);
+        robot.moveLift(400, 1);
         sleep(500);
         robot.middle(0.5);
         sleep(500);
         robot.middle(0);
-        robot.moveLift(-400, 1, telemetry);
+        robot.moveLift(-400, 1);
 
         drive.followTrajectorySequence(traj3);
 

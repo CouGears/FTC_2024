@@ -58,7 +58,7 @@ public class Auton_BlueBackdrop extends OpMode {
                 //robot.returnAfterBusy();
                 robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 robot.returnAfterBusy();
                 robot.middle(0.5);
                 sleep(1000);
@@ -89,7 +89,7 @@ public class Auton_BlueBackdrop extends OpMode {
                 robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
-                robot.moveLift(-1000, 1, telemetry);
+                robot.moveLift(-1000, 1);
 
                 robot.drive(0, -16, 1);
                 robot.returnAfterBusy();
@@ -105,7 +105,7 @@ public class Auton_BlueBackdrop extends OpMode {
                 robot.drive(14, 0, 1);
                 robot.returnAfterBusy();
                 // move lift out of the day
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 // drop pixel
                 robot.middle(.5);
                 sleep(1000);
@@ -137,7 +137,7 @@ public class Auton_BlueBackdrop extends OpMode {
                 robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
-                robot.moveLift(-1000, 1, telemetry);
+                robot.moveLift(-1000, 1);
                 robot.drive(0, -24, 1);
                 robot.returnAfterBusy();
                 robot.drive(14, 0, 1);
@@ -150,7 +150,7 @@ public class Auton_BlueBackdrop extends OpMode {
                 robot.returnAfterBusy();
                 robot.drive(7, 0, 1);
                 robot.returnAfterBusy();
-                robot.moveLift(1000, 1, telemetry);
+                robot.moveLift(1000, 1);
                 robot.returnAfterBusy();
                 robot.middle(0.5);
                 sleep(1000);
@@ -184,7 +184,7 @@ public class Auton_BlueBackdrop extends OpMode {
                 robot.drive(-4, 0, 0.5);
                 robot.returnAfterBusy();
                 robot.setDropServo(0.045);
-                robot.moveLift(-1000, 1, telemetry);
+                robot.moveLift(-1000, 1);
                 robot.drive(0, -18, 1);
                 robot.returnAfterBusy();
                 robot.drive(14, 0, 1);
