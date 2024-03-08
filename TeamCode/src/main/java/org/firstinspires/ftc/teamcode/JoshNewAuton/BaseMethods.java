@@ -13,9 +13,20 @@ public class BaseMethods {
     public void placePixel() {
         robot.moveLift(400, 1);
         sleep(500);
-        robot.middle(0.5);
+        robot.setDropServo(0.5);
         sleep(500);
-        robot.middle(0);
+        robot.setDropServo(0.045);
+        sleep(200);
+        robot.moveLift(-400, 1);
+    }
+
+    public void spitPixel() {
+        robot.moveLift(400, 1);
+        sleep(500);
+        robot.setDropServo(0.5);
+        sleep(500);
+        robot.setDropServo(0.045);
+        sleep(200);
         robot.moveLift(-400, 1);
     }
 

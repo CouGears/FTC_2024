@@ -120,66 +120,33 @@ public class Auton1 extends OpMode {
             case "left":
                 drive.followTrajectorySequence(left1);
 
-                robot.moveLift(400, 1);
-                sleep(500);
-                robot.setDropServo(0.5);
-                sleep(500);
-                robot.setDropServo(0.045);
-                sleep(200);
-                robot.moveLift(-400, 1);
+                base.spitPixel();
 
                 drive.followTrajectorySequence(left2);
 
-                robot.moveLift(400, 1);
-                sleep(500);
-                robot.middle(0.5);
-                sleep(500);
-                robot.middle(0);
-                robot.moveLift(-400, 1);
+                base.placePixel();
 
                 drive.followTrajectorySequence(left3);
                 break;
             case "middle":
                 drive.followTrajectorySequence(middle1);
 
-                robot.moveLift(400, 1);
-                sleep(500);
-                robot.setDropServo(0.5);
-                sleep(500);
-                robot.setDropServo(0.045);
-                sleep(200);
-                robot.moveLift(-400, 1);
+                base.spitPixel();
 
                 drive.followTrajectorySequence(middle2);
 
-                robot.moveLift(400, 1);
-                sleep(500);
-                robot.middle(0.5);
-                sleep(500);
-                robot.middle(0);
-                robot.moveLift(-400, 1);
+                base.placePixel();
 
                 drive.followTrajectorySequence(middle3);
                 break;
             case "right":
                 drive.followTrajectorySequence(right1);
 
-                robot.moveLift(400, 1);
-                sleep(500);
-                robot.setDropServo(0.5);
-                sleep(500);
-                robot.setDropServo(0.045);
-                sleep(200);
-                robot.moveLift(-400, 1);
+                base.spitPixel();
 
                 drive.followTrajectorySequence(right2);
 
-                robot.moveLift(400, 1);
-                sleep(500);
-                robot.middle(0.5);
-                sleep(500);
-                robot.middle(0);
-                robot.moveLift(-400, 1);
+                base.placePixel();
                 
                 drive.followTrajectorySequence(right3);
                 break;
