@@ -176,7 +176,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 // MODE 0: REGULAR DRIVE SYSTEM
                 // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
                 // (cont.) TOUCHING THE BACKDROP
-                driveSystem(0);
+                driveSystem(3);
                 // CALL INTAKE STRING/PULLEY SYSTEM
                 intakeStringSystem();
                 // CALL MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
