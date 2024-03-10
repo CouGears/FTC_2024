@@ -12,6 +12,11 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
@@ -30,6 +35,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
     public static Servo DropServo, AirplaneLaunch;
     // DISTANCE SENSOR (FRONT)
     public static DistanceSensor BackdropDistance;
+    // IMU
+    BNO055IMU imu;
     // SAMPLE MECANUM DRIVE
     public static SampleMecanumDrive drive;
     // VARIABLE FOR COLOR SENSOR SYSTEM
@@ -134,6 +141,12 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // ALLOW LIFT TO MOVE
         Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        // INIT IMU
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
+
         // ADD DATA TO TELEMETRY
         telemetry.addData("Status", "Initialized");
         // UPDATE TELEMETRY ON DRIVER STATION
@@ -234,16 +247,40 @@ public class TwoDriverTeleOp extends LinearOpMode {
                     motorFR.setPower(-((gamepad1.right_stick_y) + (gamepad1.right_stick_x) + (gamepad1.left_stick_y) + (gamepad1.left_stick_x)) * speed);
                 }
                 break;
-//            case 2:
-//                drive.setWeightedDrivePower(
-//                        new Pose2d(
-//                                -gamepad1.left_stick_y,
-//                                -gamepad1.left_stick_x,
-//                                -gamepad1.right_stick_x
-//                        )
-//                );
-//
-//                drive.update();
+            case 2:
+                drive.setWeightedDrivePower(
+                        new Pose2d(
+                                -gamepad1.left_stick_y,
+                                -gamepad1.left_stick_x,
+                                -gamepad1.right_stick_x
+                        )
+                );
+
+                drive.update();
+                break;
+            case 3:
+                double robotAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+
+                // Get joystick values, apply deadzone if needed
+                double gamepadX = gamepad1.left_stick_x;
+                double gamepadY = -gamepad1.left_stick_y; // Invert Y for intuitive control
+                double rotation = gamepad1.right_stick_x;
+
+                // Calculate desired angle of motion
+                double desiredAngle = Math.atan2(gamepadY, gamepadX) - Math.toRadians(robotAngle);
+
+                // Calculate power for each motor based on field-oriented direction
+                double motorFLPower = speed * Math.sin(desiredAngle + Math.PI / 4) + rotation;
+                double motorBLPower = speed * Math.cos(desiredAngle + Math.PI / 4) - rotation;
+                double motorBRPower = speed * Math.cos(desiredAngle + Math.PI / 4) + rotation;
+                double motorFRPower = speed * Math.sin(desiredAngle + Math.PI / 4) - rotation;
+
+                // Apply calculated motor powers
+                motorFL.setPower(motorFLPower);
+                motorBL.setPower(motorBLPower);
+                motorBR.setPower(motorBRPower);
+                motorFR.setPower(motorFRPower);
+                break;
         }
     }
     //// INTAKE SYSTEM
