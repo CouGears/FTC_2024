@@ -96,17 +96,17 @@ public class TwoDriverTeleOp extends LinearOpMode {
         PullUp = hardwareMap.get(DcMotor.class, "PullUp");
 
         // MAP DIGITAL CHANNELS
-        red1 = hardwareMap.get(DigitalChannel.class, "red1");
-        green1 = hardwareMap.get(DigitalChannel.class, "green1");
-        red2 = hardwareMap.get(DigitalChannel.class, "red2");
-        green2 = hardwareMap.get(DigitalChannel.class, "green2");
-        red3 = hardwareMap.get(DigitalChannel.class, "red3");
-        green3 = hardwareMap.get(DigitalChannel.class, "green3");
-        color = hardwareMap.get(ColorSensor.class, "Color");
+//        red1 = hardwareMap.get(DigitalChannel.class, "red1");
+//        green1 = hardwareMap.get(DigitalChannel.class, "green1");
+//        red2 = hardwareMap.get(DigitalChannel.class, "red2");
+//        green2 = hardwareMap.get(DigitalChannel.class, "green2");
+//        red3 = hardwareMap.get(DigitalChannel.class, "red3");
+//        green3 = hardwareMap.get(DigitalChannel.class, "green3");
+//        color = hardwareMap.get(ColorSensor.class, "Color");
         //color2 = hardwareMap.get(ColorSensor.class, "Color2");
 
         // MAP DISTANCE SENSOR
-        BackdropDistance = hardwareMap.get(DistanceSensor.class, "BackdropDistance");
+//        BackdropDistance = hardwareMap.get(DistanceSensor.class, "BackdropDistance");
 
         // DEFINE SAMPLE MECANUM DRIVE
         //drive = new SampleMecanumDrive(hardwareMap);
@@ -176,7 +176,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 // MODE 0: REGULAR DRIVE SYSTEM
                 // MODE 1: DRIVE SYSTEM THAT WILL NOT LET YOU DRIVE FORWARDS IF THE BUCKET IS
                 // (cont.) TOUCHING THE BACKDROP
-                driveSystem(3);
+                driveSystem(0);
                 // CALL INTAKE STRING/PULLEY SYSTEM
                 intakeStringSystem();
                 // CALL MIDDLE INTAKE PIXEL COLOR SENSOR SYSTEM
@@ -378,7 +378,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // IF CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND THE LIFT IS NOT AT IT'S LIMIT
         // OR CONTROLLER 1'S D-PAD UP BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS
         // PRESSED (OVERRIDE LIMIT BUTTON)
-        if ((gamepad1.dpad_up && Lift.getCurrentPosition() <= liftLimit) || (gamepad1.dpad_up && gamepad1.dpad_right)) {
+        if ((gamepad1.dpad_up && Lift.getCurrentPosition() <= 8000) || (gamepad1.dpad_up && gamepad1.dpad_right)) {
             // RAISE THE LIFT AT FULL SPEED
             Lift.setPower(1);
         }
@@ -386,7 +386,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // POSSIBLE POSITION
         // OR CONTROLLER 1'S D-PAD DOWN BUTTON IS PRESSED AND CONTROLLER 1'S D-PAD RIGHT BUTTON
         // IS PRESSED (OVERRIDE LIMIT BUTTON)
-        else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) || (gamepad1.dpad_down && gamepad1.dpad_right)) {
+        else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= -8000) || (gamepad1.dpad_down && gamepad1.dpad_right)) {
             // LOWER THE LIFT AT FULL SPEED
             Lift.setPower(-1);
         }
@@ -536,7 +536,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // IF CONTROLLER 1'S D-PAD LEFT BUTTON IS NOT PRESSED
         else {
             // MOVE THE BUCKET TO IT'S INITIAL POSITION
-            DropServo.setPosition(.045);
+            DropServo.setPosition(0);
             // UPDATE THE BUCKET STATE VARIABLE FOR TELEMETRY
             bucketstate = "INITIAL POSITION";
         }

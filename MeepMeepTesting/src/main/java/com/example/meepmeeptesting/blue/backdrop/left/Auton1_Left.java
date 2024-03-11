@@ -17,6 +17,7 @@ public class Auton1_Left {
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
                                 .splineToSplineHeading(new Pose2d(31, 30, Math.toRadians(180)), Math.toRadians(180))
+                                .back(6)
                                 .setReversed(true)
                                 .lineToSplineHeading(new Pose2d(50, 42, Math.toRadians(0)))
                                 .strafeLeft(18)

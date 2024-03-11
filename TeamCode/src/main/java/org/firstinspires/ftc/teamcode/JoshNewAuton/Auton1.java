@@ -28,80 +28,84 @@ public class Auton1 extends OpMode {
     // initialize new instance of robot
     RobotMethods robot = new RobotMethods();
 
-    BaseMethods base = new BaseMethods(telemetry, robot);
-
-    // tfod
-    private static final boolean USE_WEBCAM = true;
-    private static final String TFOD_MODEL_ASSET = "OldPropModel.tflite";
-    private static final String[] LABELS = { "Blue Marker", "Red Marker" };
-
-    private TfodProcessor tfod;
-    private VisionPortal visionPortal;
-
+    BaseMethods base = new BaseMethods(telemetry, robot, hardwareMap);
 
     private String pos = "right";
 
-    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
     PropDetection scanner = new PropDetection(hardwareMap, telemetry, "Blue");
 
+    TrajectorySequence left1;
+    TrajectorySequence left2;
+    TrajectorySequence left3;
+    TrajectorySequence middle1;
+    TrajectorySequence middle2;
+    TrajectorySequence middle3;
+    TrajectorySequence right1;
+    TrajectorySequence right2;
+    TrajectorySequence right3;
 
-    //trajectory
+    SampleMecanumDrive drive;
 
-    //// LEFT TRAJECTORIES
-    /// LEFT TRAJECTORY 1
-    TrajectorySequence left1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
-            // DRIVE TO SPIKE MARK
-            .splineToSplineHeading(new Pose2d(31, 30, Math.toRadians(180)), Math.toRadians(180))
-            .build();
-    TrajectorySequence left2 = drive.trajectorySequenceBuilder(left1.end())
-            // REVERSE
-            .setReversed(true)
-            // DRIVE TO BACKDROP
-            .lineToSplineHeading(new Pose2d(50, 42, Math.toRadians(0)))
-            .build();
-    TrajectorySequence left3 = drive.trajectorySequenceBuilder(left2.end())
-            // PARK ON LEFT
-            .strafeLeft(18)
-            .forward(10)
-            .build();
-
-    TrajectorySequence middle1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
-            // DRIVE TO SPIKE MARK
-            .splineToSplineHeading(new Pose2d(12, 31, Math.toRadians(270)), Math.toRadians(180))
-            .build();
-    TrajectorySequence middle2 = drive.trajectorySequenceBuilder(middle1.end())
-            // REVERSE
-            .setReversed(true)
-            // DRIVE TO BACKDROP
-            .lineToSplineHeading(new Pose2d(50, 36, Math.toRadians(0)))
-            .build();
-    TrajectorySequence middle3 = drive.trajectorySequenceBuilder(middle2.end())
-            // PARK IN CENTER
-            .strafeLeft(24)
-            .forward(10)
-            .build();
-
-    TrajectorySequence right1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
-            // DRIVE TO SPIKE MARK
-            .splineToSplineHeading(new Pose2d(7, 36, Math.toRadians(180)), Math.toRadians(180))
-            .build();
-    TrajectorySequence right2 = drive.trajectorySequenceBuilder(right1.end())
-            // REVERSE
-            .setReversed(true)
-            .lineToSplineHeading(new Pose2d(50, 30, Math.toRadians(0)))
-            .build();
-    TrajectorySequence right3 = drive.trajectorySequenceBuilder(right2.end())
-            // PARK ON RIGHT
-            .strafeLeft(30)
-            .forward(10)
-            .build();
     @Override
     public void init() {
-        robot.init(hardwareMap, telemetry);
+        base.init(hardwareMap, telemetry);
 
+        scanner.init(hardwareMap, telemetry);
 
-        scanner.init();
+        drive = new SampleMecanumDrive(hardwareMap);
+
+        //trajectory
+
+        //// LEFT TRAJECTORIES
+        /// LEFT TRAJECTORY 1
+        left1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+                // DRIVE TO SPIKE MARK
+                .splineToSplineHeading(new Pose2d(31, 30, Math.toRadians(180)), Math.toRadians(180))
+                .build();
+        left2 = drive.trajectorySequenceBuilder(left1.end())
+                // BACK AWAY FROM PURPLE PIXEL
+                .back(6)
+                // REVERSE
+                .setReversed(true)
+                // DRIVE TO BACKDROP
+                .lineToSplineHeading(new Pose2d(50, 42, Math.toRadians(0)))
+                .build();
+        left3 = drive.trajectorySequenceBuilder(left2.end())
+                // PARK ON LEFT
+                .strafeLeft(18)
+                .forward(10)
+                .build();
+
+        middle1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+                // DRIVE TO SPIKE MARK
+                .splineToSplineHeading(new Pose2d(12, 31, Math.toRadians(270)), Math.toRadians(180))
+                .build();
+        middle2 = drive.trajectorySequenceBuilder(middle1.end())
+                // REVERSE
+                .setReversed(true)
+                // DRIVE TO BACKDROP
+                .lineToSplineHeading(new Pose2d(50, 36, Math.toRadians(0)))
+                .build();
+        middle3 = drive.trajectorySequenceBuilder(middle2.end())
+                // PARK IN CENTER
+                .strafeLeft(24)
+                .forward(10)
+                .build();
+
+        right1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+                // DRIVE TO SPIKE MARK
+                .splineToSplineHeading(new Pose2d(7, 36, Math.toRadians(180)), Math.toRadians(180))
+                .build();
+        right2 = drive.trajectorySequenceBuilder(right1.end())
+                // REVERSE
+                .setReversed(true)
+                .lineToSplineHeading(new Pose2d(50, 30, Math.toRadians(0)))
+                .build();
+        right3 = drive.trajectorySequenceBuilder(right2.end())
+                // PARK ON RIGHT
+                .strafeLeft(30)
+                .forward(10)
+                .build();
 
         int i = 0;
         while (i < 300 && pos.equals("right")) {

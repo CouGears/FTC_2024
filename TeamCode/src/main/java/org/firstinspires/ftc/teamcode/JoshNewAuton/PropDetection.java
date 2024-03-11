@@ -49,7 +49,7 @@ public class PropDetection {
         this.telemetry = telemetry;
     }
 
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         // Create the TensorFlow processor by using a builder.
         tfod = new TfodProcessor.Builder()
 
