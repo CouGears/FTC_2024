@@ -397,7 +397,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // POSITION AND CONTROLLER 1'S D-PAD RIGHT BUTTON IS NOT PRESSED
         else {
             // DON'T MOVE THE LIFT
-            Lift.setPower(0);
+            Lift.setPower(0.001);
         }
     }
 

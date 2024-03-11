@@ -117,12 +117,12 @@ public class TwoDrivers_CompetitionDriving2024 extends LinearOpMode {
                 }
                 if (gamepad2.y || (gamepad2.right_bumper && gamepad2.left_bumper)) { // P2 can take control of intake.
                     BackIntake.setPower(1);
-                    MiddleIntake.setPower(-1);
+                    MiddleIntake.setPower(-.6);
                 } else if (gamepad2.right_bumper) {
                     BackIntake.setPower(1);
                     MiddleIntake.setPower(0);
                 } else if (gamepad2.left_bumper) {
-                    MiddleIntake.setPower(-1);
+                    MiddleIntake.setPower(-.6);
                     BackIntake.setPower(0);
                 } else {
                     MiddleIntake.setPower(0);
@@ -159,7 +159,7 @@ public class TwoDrivers_CompetitionDriving2024 extends LinearOpMode {
                 } else if ((gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) || (gamepad1.dpad_down && gamepad1.dpad_right)) { //At 500 b/c motor will overspin w/ momentum and end up <0
                     Lift.setPower(-1);
                 } else {
-                    Lift.setPower(0);
+                    Lift.setPower(.75);
                 }
 
 
