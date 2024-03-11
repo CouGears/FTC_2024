@@ -190,6 +190,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
             while (pullup && opModeIsActive()) {
                 // CALL PULLUP SYSTEM B
                 pullupSystemB();
+                intakeStringSystem();
             }
         }
 
