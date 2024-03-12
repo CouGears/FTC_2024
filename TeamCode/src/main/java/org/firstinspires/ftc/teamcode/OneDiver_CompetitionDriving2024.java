@@ -144,12 +144,12 @@ public class OneDiver_CompetitionDriving2024 extends LinearOpMode {
                 }
                 if (gamepad1.y || (gamepad1.right_bumper && gamepad1.left_bumper)) {
                     BackIntake.setPower(1);
-                    MiddleIntake.setPower(-1);
+                    MiddleIntake.setPower(-.6);
                 } else if (gamepad1.right_bumper) {
                     BackIntake.setPower(1);
                     MiddleIntake.setPower(0);
                 } else if (gamepad1.left_bumper) {
-                    MiddleIntake.setPower(-1);
+                    MiddleIntake.setPower(-.6);
                     BackIntake.setPower(0);
                 } else if (gamepad1.x) {
                     BackIntake.setPower(-1);
