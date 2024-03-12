@@ -16,7 +16,7 @@ import java.util.List;
 public class PropDetection {
 
     private static final boolean USE_WEBCAM = true;
-    private static final String TFOD_MODEL_ASSET = "OldPropModel.tflite";
+    private static final String TFOD_MODEL_ASSET = "RoundedCubeModel.tflite";
     private static final String[] LABELS = { "Blue Marker", "Red Marker" };
 
     private TfodProcessor tfod;
