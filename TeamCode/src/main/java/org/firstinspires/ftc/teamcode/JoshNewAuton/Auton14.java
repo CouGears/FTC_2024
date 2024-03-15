@@ -1,29 +1,16 @@
 package org.firstinspires.ftc.teamcode.JoshNewAuton;
 
-import android.util.Size;
-
-import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.JoshAuton.RobotMethods;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive2;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.tfod.TfodProcessor;
-
-import java.util.List;
 
 @Autonomous
-public class Auton1 extends OpMode {
+public class Auton14 extends OpMode {
 
     // initialize new instance of robot
     RobotMethods robot = new RobotMethods();
@@ -32,7 +19,7 @@ public class Auton1 extends OpMode {
 
     private String pos = "right";
 
-    PropDetection scanner = new PropDetection(hardwareMap, telemetry, "Blue");
+    PropDetection scanner = new PropDetection(hardwareMap, telemetry, "Red");
 
     TrajectorySequence left1;
     TrajectorySequence left2;
@@ -44,7 +31,7 @@ public class Auton1 extends OpMode {
     TrajectorySequence right2;
     TrajectorySequence right3;
 
-    SampleMecanumDrive drive;
+    SampleMecanumDrive2 drive;
 
     @Override
     public void init() {
@@ -52,64 +39,64 @@ public class Auton1 extends OpMode {
 
         scanner.init(hardwareMap, telemetry);
 
-        drive = new SampleMecanumDrive(hardwareMap);
+        drive = new SampleMecanumDrive2(hardwareMap);
 
         //trajectory
 
         //// LEFT TRAJECTORIES
         /// LEFT TRAJECTORY 1
-        left1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
-                // DRIVE TO SPIKE MARK
-                .splineToSplineHeading(new Pose2d(31, 30, Math.toRadians(180)), Math.toRadians(180))
+        left1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -64.5, Math.toRadians(180)))
+                .strafeRight(6)
+                .splineToSplineHeading(new Pose2d(-48, -36, Math.toRadians(90)), Math.toRadians(90))
                 .build();
         left2 = drive.trajectorySequenceBuilder(left1.end())
-                // BACK AWAY FROM PURPLE PIXEL
-                .back(6)
-                // REVERSE
-                .setReversed(true)
-                // DRIVE TO BACKDROP
-                .lineToSplineHeading(new Pose2d(50, 42, Math.toRadians(0)))
+                .back(18)
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-36, -60, Math.toRadians(0)), Math.toRadians(270))
+                .forward(48)
+                .setReversed(false)
+                .splineToConstantHeading(new Vector2d(50, -30), Math.toRadians(0))
                 .build();
         left3 = drive.trajectorySequenceBuilder(left2.end())
-                // PARK ON LEFT
                 .strafeLeft(18)
                 .forward(10)
                 .build();
 
-        middle1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
-                // DRIVE TO SPIKE MARK
+        middle1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -64.5, Math.toRadians(180)))
                 .strafeRight(6)
-                .splineToSplineHeading(new Pose2d(12, 33, Math.toRadians(270)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-36, -31, Math.toRadians(90)), Math.toRadians(90))
                 .build();
         middle2 = drive.trajectorySequenceBuilder(middle1.end())
-                .back(4)
-                // REVERSE
-                .setReversed(true)
-                // DRIVE TO BACKDROP
-                .lineToSplineHeading(new Pose2d(50, 36, Math.toRadians(0)))
+                .back(10)
+                .splineToSplineHeading(new Pose2d(-36, -60, Math.toRadians(0)), Math.toRadians(0))
+                .forward(48)
+                .setReversed(false)
+                .splineToConstantHeading(new Vector2d(50, -36), Math.toRadians(0))
                 .build();
         middle3 = drive.trajectorySequenceBuilder(middle2.end())
-                // PARK IN CENTER
                 .strafeLeft(24)
                 .forward(10)
                 .build();
 
-        right1 = drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
-                // DRIVE TO SPIKE MARK
-                .splineToSplineHeading(new Pose2d(7, 36, Math.toRadians(180)), Math.toRadians(180))
+        right1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -64.5, Math.toRadians(180)))
+                .strafeRight(6)
+                .splineToSplineHeading(new Pose2d(-48, -36, Math.toRadians(90)), Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(-31, -36, Math.toRadians(0)), Math.toRadians(0))
                 .build();
         right2 = drive.trajectorySequenceBuilder(right1.end())
-                // REVERSE
+                .back(10)
                 .setReversed(true)
-                .lineToSplineHeading(new Pose2d(50, 30, Math.toRadians(0)))
+                .splineToConstantHeading(new Vector2d(-36, -60), Math.toRadians(0))
+                .forward(48)
+                .setReversed(false)
+                .splineToConstantHeading(new Vector2d(50, -42), Math.toRadians(0))
                 .build();
         right3 = drive.trajectorySequenceBuilder(right2.end())
-                // PARK ON RIGHT
                 .strafeLeft(30)
                 .forward(10)
                 .build();
 
-        Pose2d startPose = new Pose2d(12, 64.5, 0);
+        Pose2d startPose = new Pose2d(-36, -64.5, Math.toRadians(180));
         drive.setPoseEstimate(startPose);
 
         int i = 0;

@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
  * and op modes themselves.
  */
 @Config
-public class DriveConstants {
+public class DriveConstants2 {
 
     /*
      * These are motor constants that should be listed online for your motors.
@@ -88,8 +88,8 @@ public class DriveConstants {
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
      */
-    public static double MAX_VEL = 43.857278219984295;
-    public static double MAX_ACCEL = 43.857278219984295;
+    public static double MAX_VEL = 20;
+    public static double MAX_ACCEL = 20;
     public static double MAX_ANG_VEL = 3.3259993781623916;
     public static double MAX_ANG_ACCEL = 3.3259993781623916;
 

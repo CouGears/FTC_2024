@@ -16,6 +16,7 @@ public class Auton1_Middle {
                 .setConstraints(43.857278219984295, 43.857278219984295, 4.64, 4.64, 0.425)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(12, 64.5, 0))
+                                .strafeRight(6)
                                 .splineToSplineHeading(new Pose2d(12, 31, Math.toRadians(270)), Math.toRadians(180))
                                 .setReversed(true)
                                 .lineToSplineHeading(new Pose2d(50, 36, Math.toRadians(0)))

@@ -12,6 +12,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PropDetection {
 
@@ -118,8 +119,20 @@ public class PropDetection {
             // get the first recognition
             Recognition recognition = currentRecognitions.get(0);
 
-            // check if the recognition label matches the autonomous color and its confidence is above 70 percent
-            if ((recognition.getLabel().equals(markerLabel) || markerLabel == "N/A") && recognition.getConfidence() > 0.7) {
+            // get all recognitions
+            for (Recognition rec : currentRecognitions) {
+                // if tensorflow is more confident about another recognition
+                if (rec.getConfidence() > recognition.getConfidence()) {
+                    // use that recognition
+                    recognition = rec;
+                }
+            }
+
+            // check if the recognition label matches the autonomous color and its confidence is above 40 percent
+            if ((recognition.getLabel().equals(markerLabel) || Objects.equals(markerLabel, "N/A")) && recognition.getConfidence() >= 0.4) {
+                telemetry.addData("label", recognition.getLabel());
+                telemetry.addData("marker label", markerLabel);
+                telemetry.update();
                 // get the x position of the recognition
                 double x = (recognition.getLeft() + recognition.getRight()) / 2;
                 // if the x position is less than 300 (on the left)
