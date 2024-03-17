@@ -25,6 +25,7 @@ public class Auton9_Right {
                                 .forward(48)
                                 .setReversed(false)
                                 .splineToConstantHeading(new Vector2d(50, 30), Math.toRadians(0))
+                                .strafeLeft(6)
                                 .build()
                 );
 
